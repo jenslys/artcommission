@@ -1,6 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://artbymuland.no/wp-content/uploads/2022/04/white.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://artbymuland.no/wp-content/uploads/2022/04/logo.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/69081683/219066572-6938ad28-614a-4c19-8eb7-9a5fe4786cc4.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/69081683/219066559-a5f2683a-497b-4236-b003-877cd047772e.png">
+  <img alt="ArtByMuland Logo" src="https://user-images.githubusercontent.com/69081683/219066559-a5f2683a-497b-4236-b003-877cd047772e.png">
 </picture>
 
 # Setup
