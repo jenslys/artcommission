@@ -1,5 +1,7 @@
-![Logo](https://artbymuland.no/wp-content/uploads/2022/04/white.png#gh-dark-mode-only)
-![logo](https://artbymuland.no/wp-content/uploads/2022/04/logo.png#gh-light-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://artbymuland.no/wp-content/uploads/2022/04/white.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://artbymuland.no/wp-content/uploads/2022/04/logo.png">
+</picture>
 
 # Setup
 
