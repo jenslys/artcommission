@@ -7,6 +7,7 @@ import Form from './pages/Form';
 import Login from './pages/Login';
 import Requests from './pages/Requests';
 import Orders from './pages/Orders';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -28,6 +29,7 @@ function App() {
               path='/orders'
               element={!user ? <Navigate to='/login' replace={true} /> : <Orders />}
             />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       )}
