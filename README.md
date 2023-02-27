@@ -24,6 +24,12 @@ Install dependencies
 npm install
 ```
 
+Copy .env.example to .env
+
+```shell
+cp .env.example .env
+```
+
 Start local environment
 
 ```shell
