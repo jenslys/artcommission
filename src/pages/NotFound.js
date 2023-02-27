@@ -19,7 +19,7 @@ export default function NotFound() {
             Page not found
           </Typography>
           <Typography align='center'>
-            <Link href='/' underline='none' variant='body1' color='gray'>
+            <Link href='/' underline='hover' variant='body1' color='gray'>
               Go Back
             </Link>
           </Typography>
