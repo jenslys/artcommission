@@ -9,7 +9,7 @@
 Clone project
 
 ```shell
-git clone https://github.com/usngroup/artcommission.git
+git clone https://github.com/jenslys/artcommission.git
 ```
 
 CD into project
@@ -27,7 +27,7 @@ npm install
 Copy .env.example to .env
 
 ```shell
-cp .env.example .env
+cp env.example .env
 ```
 
 Start local environment
