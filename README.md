@@ -18,6 +18,12 @@ CD into project
 cd artcommission
 ```
 
+Install prettier globally
+
+```shell
+npm install -g prettier
+```
+
 Install dependencies
 
 ```shell
