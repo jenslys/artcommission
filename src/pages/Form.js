@@ -3,7 +3,7 @@ export default function Form() {
   return (
     <div>
       <Typography variant='h1' component='h2'>
-        Form Page
+        Form Page1
       </Typography>
       ;
     </div>
