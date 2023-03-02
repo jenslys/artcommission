@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Requests from './pages/Requests';
 import Orders from './pages/Orders';
 import NotFound from './pages/NotFound';
+import Navbar from './components/Navbar';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -15,6 +16,7 @@ function App() {
     <div className='App'>
       {authIsReady && (
         <BrowserRouter>
+          <Navbar />
           <Routes>
             <Route path='/' element={<Form />} />
             <Route
