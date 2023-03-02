@@ -21,6 +21,7 @@ export default function FormCreation() {
     size: '100x100',
     description: '',
     status: 'new',
+    stage: 'requests',
   });
   const dbRef = collection(db, 'orders');
 
