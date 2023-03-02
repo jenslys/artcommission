@@ -20,7 +20,6 @@ export default function FormCreation() {
     city: '',
     size: '100x100',
     description: '',
-    status: 'new',
   });
   const dbRef = collection(db, 'orders');
 
