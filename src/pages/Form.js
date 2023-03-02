@@ -1,11 +1,9 @@
-import Typography from '@mui/material/Typography';
+import FormCreation from '../components/FormCreation';
+
 export default function Form() {
   return (
     <div>
-      <Typography variant='h1' component='h2'>
-        Form Page1
-      </Typography>
-      ;
+      <FormCreation />
     </div>
   );
 }
