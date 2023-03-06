@@ -13,37 +13,40 @@ export default function Navbar() {
   const { logout } = useLogout();
   const navigate = useNavigate();
 
-  const navigateToOrders = () => {
-    navigate('/orders');
-  };
-
-  const navigateToRequests = () => {
-    navigate('/requests');
-  };
-
-  const navigateToLogin = () => {
-    navigate('/login');
-  };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             {user && (
-              <Button color='inherit' onClick={navigateToOrders}>
+              <Button
+                color='inherit'
+                onClick={() => {
+                  navigate('/orders');
+                }}
+              >
                 Orders
               </Button>
             )}
             {user && (
-              <Button color='inherit' onClick={navigateToRequests}>
+              <Button
+                color='inherit'
+                onClick={() => {
+                  navigate('/requests');
+                }}
+              >
                 Requests
               </Button>
             )}
           </Typography>
           <Typography variant='h6' component='div'>
             {!user && (
-              <Button color='inherit' onClick={navigateToLogin}>
+              <Button
+                color='inherit'
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
                 Login
               </Button>
             )}
