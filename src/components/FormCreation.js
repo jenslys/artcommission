@@ -22,6 +22,7 @@ export default function FormCreation() {
     description: '',
     status: 'new',
     stage: 'requests',
+    orderProgress: 'not started',
   });
   const dbRef = collection(db, 'requests');
 
