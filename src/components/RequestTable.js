@@ -55,7 +55,10 @@ const RequestTable = () => {
   };
 
   const handleDenyClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), { status: 'denied' });
+    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+      status: 'denied',
+      stage: 'archived',
+    });
     setOpen(false);
     update();
   };
