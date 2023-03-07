@@ -16,6 +16,7 @@ import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
@@ -118,24 +119,24 @@ const RequestTable = () => {
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Request Details</DialogTitle>
             <DialogContent>
-              <p>First Name: {selectedRequest.firstName}</p>
-              <p>Last Name: {selectedRequest.lastName}</p>
-              <p>Email: {selectedRequest.email}</p>
-              <p>Address: {selectedRequest.address}</p>
-              <p>Zip Code: {selectedRequest.zipCode}</p>
-              <p>City: {selectedRequest.city}</p>
-              <p>Size: {selectedRequest.size}</p>
-              <p>Description: {selectedRequest.description}</p>
+              <Typography>First Name: {selectedRequest.firstName}</Typography>
+              <Typography>Last Name: {selectedRequest.lastName}</Typography>
+              <Typography>Email: {selectedRequest.email}</Typography>
+              <Typography>Address: {selectedRequest.address}</Typography>
+              <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
+              <Typography>City: {selectedRequest.city}</Typography>
+              <Typography>Size: {selectedRequest.size}</Typography>
+              <Typography>Description: {selectedRequest.description}</Typography>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' color='error' onClick={() => handleDenyClick}>
-                Deny
+              <Button variant='contained' color='primary' onClick={() => handleContactClick}>
+                Contact
               </Button>
               <Button variant='contained' color='success' onClick={() => handleAcceptClick}>
                 Accept
               </Button>
-              <Button variant='contained' color='primary' onClick={() => handleContactClick}>
-                Contact
+              <Button variant='contained' color='error' onClick={() => handleDenyClick}>
+                Deny
               </Button>
               <Button onClick={() => setOpen(false)}>Close</Button>
             </DialogActions>

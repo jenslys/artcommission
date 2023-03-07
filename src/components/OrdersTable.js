@@ -17,6 +17,7 @@ import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import { Grid } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Typography from '@mui/material/Typography';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
@@ -37,7 +38,7 @@ const OrdersTable = () => {
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'orders'), where('stage', '==', 'orders'));
+    const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
     const snapshot = await getDocs(q);
     const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setOrders(ordersData);
@@ -128,7 +129,7 @@ const OrdersTable = () => {
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Description:</DialogTitle>
             <DialogContent>
-              <p>{selectedOrder.description}</p>
+              <Typography>{selectedOrder.description}</Typography>
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setOpen(false)}>Close</Button>
