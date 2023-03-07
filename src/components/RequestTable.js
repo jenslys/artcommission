@@ -86,7 +86,11 @@ const RequestTable = () => {
                     <Button onClick={() => handleViewClick(request)}>View</Button>
                   </TableCell>
                   <TableCell>
-                    <Chip color='primary' label={request.status} />
+                    <Chip
+                      color='primary'
+                      style={{ textTransform: 'capitalize' }}
+                      label={request.status}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -107,14 +111,10 @@ const RequestTable = () => {
               <p>Description: {selectedRequest.description}</p>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' onClick={handleDenyClick} sx={{ backgroundColor: 'red' }}>
+              <Button variant='contained' color='error' onClick={handleDenyClick}>
                 Deny
               </Button>
-              <Button
-                variant='contained'
-                onClick={handleAcceptClick}
-                sx={{ backgroundColor: 'green' }}
-              >
+              <Button variant='contained' color='success' onClick={handleAcceptClick}>
                 Accept
               </Button>
               <Button onClick={() => setOpen(false)}>Close</Button>
