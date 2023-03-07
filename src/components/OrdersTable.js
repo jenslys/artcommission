@@ -21,6 +21,8 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [progress, setProgress] = useState();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -46,23 +48,25 @@ const OrdersTable = () => {
     setOpen(true);
   };
 
-  const handleCClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedOrder.id), {
+  const handleCClick = async (request) => {
+    setProgress('completed');
+    await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'completed',
-      stage: 'archived',
     });
     update();
   };
 
-  const handleIPClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedOrder.id), {
+  const handleIPClick = async (request) => {
+    setProgress('in progress');
+    await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'in progress',
     });
     update();
   };
 
-  const handleNSClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedOrder.id), {
+  const handleNSClick = async (request) => {
+    setProgress('not started');
+    await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'not started',
     });
     update();
@@ -110,9 +114,9 @@ const OrdersTable = () => {
                   </TableCell>
                   <TableCell>
                     <ButtonGroup variant='outlined' aria-label='outlined primary button group'>
-                      <Button onClick={handleCClick}>Completed</Button>
-                      <Button onClick={handleIPClick}>In Progress</Button>
-                      <Button onClick={handleNSClick}>Not Started</Button>
+                      <Button onClick={() => handleCClick(request)}>Completed</Button>
+                      <Button onClick={() => handleIPClick(request)}>In Progress</Button>
+                      <Button onClick={() => handleNSClick(request)}>Not Started</Button>
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>

@@ -128,13 +128,13 @@ const RequestTable = () => {
               <p>Description: {selectedRequest.description}</p>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' color='error' onClick={handleDenyClick}>
+              <Button variant='contained' color='error' onClick={() => handleDenyClick}>
                 Deny
               </Button>
-              <Button variant='contained' color='success' onClick={handleAcceptClick}>
+              <Button variant='contained' color='success' onClick={() => handleAcceptClick}>
                 Accept
               </Button>
-              <Button variant='contained' color='primary' onClick={handleContactClick}>
+              <Button variant='contained' color='primary' onClick={() => handleContactClick}>
                 Contact
               </Button>
               <Button onClick={() => setOpen(false)}>Close</Button>
