@@ -14,62 +14,61 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
-import { Box } from '@mui/system';
+import Chip from '@mui/material/Chip';
+import { Grid } from '@mui/material';
 
-const OrdersTable = () => {
-  const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+const RequestTable = () => {
+  const [requests, setRequests] = useState([]);
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const q = query(collection(db, 'orders'), where('status', '==', 'new'));
+    const fetchRequests = async () => {
+      const q = query(collection(db, 'requests'), where('status', '==', 'new'));
       const snapshot = await getDocs(q);
-      const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setOrders(ordersData);
+      const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setRequests(requestsData);
     };
 
-    fetchOrders();
+    fetchRequests();
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'orders'), where('status', '==', 'new'));
+    const q = query(collection(db, 'requests'), where('status', '==', 'new'));
     const snapshot = await getDocs(q);
-    const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setOrders(ordersData);
+    const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setRequests(requestsData);
   };
 
-  const handleViewClick = (order) => {
-    setSelectedOrder(order);
+  const handleViewClick = (request) => {
+    setSelectedRequest(request);
     setOpen(true);
   };
 
   const handleAcceptClick = async () => {
-    await updateDoc(doc(db, 'orders', selectedOrder.id), { status: 'accepted' });
+    await updateDoc(doc(db, 'requests', selectedRequest.id), { status: 'accepted' });
     setOpen(false);
     update();
   };
 
   const handleDenyClick = async () => {
-    await updateDoc(doc(db, 'orders', selectedOrder.id), { status: 'denied' });
+    await updateDoc(doc(db, 'requests', selectedRequest.id), { status: 'denied' });
     setOpen(false);
     update();
   };
 
   return (
-    <Box
-      sx={{
-        width: '80%',
-        height: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: '100px',
-      }}
+    <Grid
+      container
+      spacing={0}
+      direction='column'
+      alignItems='center'
+      justifyContent='center'
+      padding={4}
     >
       <>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <Table maxWith={500} aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
@@ -79,31 +78,33 @@ const OrdersTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell>{`${order.firstName} ${order.lastName}`}</TableCell>
-                  <TableCell>{order.id}</TableCell>
+              {requests.map((request) => (
+                <TableRow key={request.id}>
+                  <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
+                  <TableCell>{request.id}</TableCell>
                   <TableCell>
-                    <button onClick={() => handleViewClick(order)}>View</button>
+                    <Button onClick={() => handleViewClick(request)}>View</Button>
                   </TableCell>
-                  <TableCell>{order.status}</TableCell>
+                  <TableCell>
+                    <Chip color='primary' label={request.status} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        {selectedOrder && (
+        {selectedRequest && (
           <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Order Details</DialogTitle>
+            <DialogTitle>Request Details</DialogTitle>
             <DialogContent>
-              <p>First Name: {selectedOrder.firstName}</p>
-              <p>Last Name: {selectedOrder.lastName}</p>
-              <p>Email: {selectedOrder.email}</p>
-              <p>Address: {selectedOrder.address}</p>
-              <p>Zip Code: {selectedOrder.zipCode}</p>
-              <p>City: {selectedOrder.city}</p>
-              <p>Size: {selectedOrder.size}</p>
-              <p>Description: {selectedOrder.description}</p>
+              <p>First Name: {selectedRequest.firstName}</p>
+              <p>Last Name: {selectedRequest.lastName}</p>
+              <p>Email: {selectedRequest.email}</p>
+              <p>Address: {selectedRequest.address}</p>
+              <p>Zip Code: {selectedRequest.zipCode}</p>
+              <p>City: {selectedRequest.city}</p>
+              <p>Size: {selectedRequest.size}</p>
+              <p>Description: {selectedRequest.description}</p>
             </DialogContent>
             <DialogActions>
               <Button variant='contained' onClick={handleDenyClick} sx={{ backgroundColor: 'red' }}>
@@ -121,8 +122,8 @@ const OrdersTable = () => {
           </Dialog>
         )}
       </>
-    </Box>
+    </Grid>
   );
 };
 
-export default OrdersTable;
+export default RequestTable;
