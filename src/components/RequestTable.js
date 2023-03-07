@@ -46,7 +46,10 @@ const RequestTable = () => {
   };
 
   const handleAcceptClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), { status: 'accepted' });
+    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+      status: 'accepted',
+      stage: 'orders',
+    });
     setOpen(false);
     update();
   };
