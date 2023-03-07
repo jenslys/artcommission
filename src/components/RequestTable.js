@@ -24,7 +24,7 @@ const RequestTable = () => {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const q = query(collection(db, 'requests'), where('status', '==', 'new'));
+      const q = query(collection(db, 'requests'), where('stage', '==', 'requests'));
       const snapshot = await getDocs(q);
       const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setRequests(requestsData);
@@ -34,7 +34,7 @@ const RequestTable = () => {
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'requests'), where('status', '==', 'new'));
+    const q = query(collection(db, 'requests'), where('stage', '==', 'requests'));
     const snapshot = await getDocs(q);
     const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setRequests(requestsData);
@@ -52,6 +52,17 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+  };
+
+  const handleContactClick = async () => {
+    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+      status: 'contacted',
+    });
+    setOpen(false);
+    update();
+    window.open(
+      'mailto:' + selectedRequest.email + '?subject=Response to art commission - ArtByMuland',
+    );
   };
 
   const handleDenyClick = async () => {
@@ -122,6 +133,9 @@ const RequestTable = () => {
               </Button>
               <Button variant='contained' color='success' onClick={handleAcceptClick}>
                 Accept
+              </Button>
+              <Button variant='contained' color='primary' onClick={handleContactClick}>
+                Contact
               </Button>
               <Button onClick={() => setOpen(false)}>Close</Button>
             </DialogActions>
