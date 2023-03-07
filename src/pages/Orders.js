@@ -1,9 +1,10 @@
 import Typography from '@mui/material/Typography';
+import OrdersTable from '../components/OrdersCreation';
 export default function Orders() {
   return (
     <div>
-      <Typography variant='h1' component='h2'>
-        Orders page
+      <Typography>
+        <OrdersTable />
       </Typography>
       ;
     </div>
