@@ -1,12 +1,9 @@
-import Typography from '@mui/material/Typography';
+import RequestTable from '../components/RequestTable';
 
 export default function Requests() {
   return (
     <div>
-      <Typography variant='h1' component='h2'>
-        Request page
-      </Typography>
-      ;
+      <RequestTable />
     </div>
   );
 }

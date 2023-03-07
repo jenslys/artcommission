@@ -23,7 +23,7 @@ export default function FormCreation() {
     status: 'new',
     stage: 'requests',
   });
-  const dbRef = collection(db, 'orders');
+  const dbRef = collection(db, 'requests');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
