@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
+import { AccountCircle, ExitToApp, RequestQuote, ShoppingCart } from '@mui/icons-material';
+import logo_white from '../assets/logo_white.png';
 
 export default function Navbar() {
   const { user } = useAuthContext();
@@ -17,20 +19,27 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+          <Box
+            component='img'
+            sx={{
+              maxHeight: { xs: 233, md: 167 },
+              maxWidth: { xs: 350, md: 250 },
+              mr: 4,
+            }}
+            alt='The house from the offer.'
+            src={logo_white}
+          />
+          <Typography
+            variant='regular'
+            component='div'
+            sx={{
+              flexGrow: 2,
+            }}
+          >
             {user && (
               <Button
                 color='inherit'
-                onClick={() => {
-                  navigate('/orders');
-                }}
-              >
-                Orders
-              </Button>
-            )}
-            {user && (
-              <Button
-                color='inherit'
+                startIcon={<RequestQuote />}
                 onClick={() => {
                   navigate('/requests');
                 }}
@@ -38,11 +47,30 @@ export default function Navbar() {
                 Requests
               </Button>
             )}
+            {user && (
+              <Button
+                color='inherit'
+                startIcon={<ShoppingCart />}
+                sx={{ ml: 2 }}
+                onClick={() => {
+                  navigate('/orders');
+                }}
+              >
+                Orders
+              </Button>
+            )}
           </Typography>
-          <Typography variant='h6' component='div'>
+          <Typography
+            variant='regular'
+            component='div'
+            sx={{
+              flexGrow: 0,
+            }}
+          >
             {!user && (
               <Button
                 color='inherit'
+                startIcon={<AccountCircle />}
                 onClick={() => {
                   navigate('/login');
                 }}
@@ -51,7 +79,7 @@ export default function Navbar() {
               </Button>
             )}
             {user && (
-              <Button color='inherit' onClick={logout}>
+              <Button color='inherit' startIcon={<ExitToApp />} onClick={logout}>
                 Logout
               </Button>
             )}
