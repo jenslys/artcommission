@@ -74,7 +74,7 @@ const RequestTable = () => {
     >
       <>
         <TableContainer component={Paper}>
-          <Table maxWith={500} aria-label='simple table'>
+          <Table aria-label='simple table'>
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
