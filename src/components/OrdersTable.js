@@ -18,20 +18,22 @@ import Chip from '@mui/material/Chip';
 import { Grid } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  // eslint-disable-next-line no-unused-vars
-  const [progress, setProgress] = useState();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setLoading(true); // set loading state to true
       const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
       const snapshot = await getDocs(q);
       const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setOrders(ordersData);
+      setLoading(false); // set loading state to false
     };
 
     fetchOrders();
@@ -50,7 +52,6 @@ const OrdersTable = () => {
   };
 
   const handleCClick = async (request) => {
-    setProgress('completed');
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'completed',
     });
@@ -58,7 +59,6 @@ const OrdersTable = () => {
   };
 
   const handleIPClick = async (request) => {
-    setProgress('in progress');
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'in progress',
     });
@@ -66,7 +66,6 @@ const OrdersTable = () => {
   };
 
   const handleNSClick = async (request) => {
-    setProgress('not started');
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'not started',
     });
@@ -83,48 +82,52 @@ const OrdersTable = () => {
       padding={4}
     >
       <>
-        <TableContainer component={Paper}>
-          <Table aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>ID</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Size</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Progress</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((request) => (
-                <TableRow key={request.id}>
-                  <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                  <TableCell>{request.id}</TableCell>
-                  <TableCell>
-                    <Button onClick={() => handleViewClick(request)}>View</Button>
-                  </TableCell>
-                  <TableCell>{request.size}</TableCell>
-                  <TableCell>{request.email}</TableCell>
-                  <TableCell>
-                    <Chip
-                      color='primary'
-                      style={{ textTransform: 'capitalize' }}
-                      label={request.orderProgress}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <ButtonGroup variant='outlined' aria-label='outlined primary button group'>
-                      <Button onClick={() => handleCClick(request)}>Completed</Button>
-                      <Button onClick={() => handleIPClick(request)}>In Progress</Button>
-                      <Button onClick={() => handleNSClick(request)}>Not Started</Button>
-                    </ButtonGroup>
-                  </TableCell>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <TableContainer component={Paper}>
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Size</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Progress</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {orders.map((request) => (
+                  <TableRow key={request.id}>
+                    <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
+                    <TableCell>{request.id}</TableCell>
+                    <TableCell>
+                      <Button onClick={() => handleViewClick(request)}>View</Button>
+                    </TableCell>
+                    <TableCell>{request.size}</TableCell>
+                    <TableCell>{request.email}</TableCell>
+                    <TableCell>
+                      <Chip
+                        color='primary'
+                        style={{ textTransform: 'capitalize' }}
+                        label={request.orderProgress}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <ButtonGroup variant='outlined' aria-label='outlined primary button group'>
+                        <Button onClick={() => handleCClick(request)}>Completed</Button>
+                        <Button onClick={() => handleIPClick(request)}>In Progress</Button>
+                        <Button onClick={() => handleNSClick(request)}>Not Started</Button>
+                      </ButtonGroup>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
         {selectedOrder && (
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Description:</DialogTitle>
