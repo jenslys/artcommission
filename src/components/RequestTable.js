@@ -28,7 +28,10 @@ const RequestTable = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       setLoading(true); // set loading state to true
-      const q = query(collection(db, 'requests'), where('stage', '==', 'requests'));
+      const q = query(
+        collection(db, 'requests'),
+        where('stage', '==', 'requests', 'archived', '==', 'false'),
+      );
       const snapshot = await getDocs(q);
       const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setRequests(requestsData);
