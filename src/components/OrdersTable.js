@@ -54,6 +54,8 @@ const OrdersTable = () => {
   const handleCClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'completed',
+      stage: 'archived',
+      Status: 'completed',
     });
     update();
   };
