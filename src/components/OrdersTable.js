@@ -29,7 +29,11 @@ const OrdersTable = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true); // set loading state to true
-      const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
+      const q = query(
+        collection(db, 'requests'),
+        where('stage', '==', 'orders'),
+        where('archived', '==', 'false'),
+      );
       const snapshot = await getDocs(q);
       const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setOrders(ordersData);
@@ -40,7 +44,11 @@ const OrdersTable = () => {
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
+    const q = query(
+      collection(db, 'requests'),
+      where('stage', '==', 'orders'),
+      where('archived', '==', 'false'),
+    );
     const snapshot = await getDocs(q);
     const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setOrders(ordersData);
@@ -53,23 +61,22 @@ const OrdersTable = () => {
 
   const handleCClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
-      orderProgress: 'completed',
-      stage: 'archived',
-      Status: 'completed',
+      archived: 'true',
+      status: 'completed',
     });
     update();
   };
 
   const handleIPClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
-      orderProgress: 'in progress',
+      status: 'in progress',
     });
     update();
   };
 
   const handleNSClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
-      orderProgress: 'not started',
+      status: 'not started',
     });
     update();
   };
@@ -114,7 +121,7 @@ const OrdersTable = () => {
                       <Chip
                         color='primary'
                         style={{ textTransform: 'capitalize' }}
-                        label={request.orderProgress}
+                        label={request.status}
                       />
                     </TableCell>
                     <TableCell>

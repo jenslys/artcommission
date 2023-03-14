@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
-import { AccountCircle, ExitToApp, RequestQuote, ShoppingCart } from '@mui/icons-material';
+import { AccountCircle, Archive, ExitToApp, RequestQuote, ShoppingCart } from '@mui/icons-material';
 import logo_white from '../assets/logo_white.png';
 
 export default function Navbar() {
@@ -57,6 +57,18 @@ export default function Navbar() {
                 }}
               >
                 Orders
+              </Button>
+            )}
+            {user && (
+              <Button
+                color='inherit'
+                startIcon={<Archive />}
+                sx={{ ml: 2 }}
+                onClick={() => {
+                  navigate('/archive');
+                }}
+              >
+                Archive
               </Button>
             )}
           </Typography>

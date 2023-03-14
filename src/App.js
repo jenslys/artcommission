@@ -9,6 +9,7 @@ import Requests from './pages/Requests';
 import Orders from './pages/Orders';
 import NotFound from './pages/NotFound';
 import Navbar from './components/Navbar';
+import Archive from './pages/Archive';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -26,6 +27,10 @@ function App() {
             <Route
               path='/requests'
               element={!user ? <Navigate to='/login' replace={true} /> : <Requests />}
+            />
+            <Route
+              path='/archive'
+              element={!user ? <Navigate to='/login' replace={true} /> : <Archive />}
             />
             <Route
               path='/orders'
