@@ -40,7 +40,10 @@ const OrdersTable = () => {
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
+    const q = query(
+      collection(db, 'requests'),
+      where('stage', '==', 'orders', 'archived', '==', 'false'),
+    );
     const snapshot = await getDocs(q);
     const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setOrders(ordersData);
@@ -54,7 +57,7 @@ const OrdersTable = () => {
   const handleCClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'completed',
-      stage: 'archived',
+      archived: 'true',
       Status: 'completed',
     });
     update();
