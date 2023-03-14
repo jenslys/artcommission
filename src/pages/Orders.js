@@ -1,8 +1,9 @@
-import Typography from '@mui/material/Typography';
+import OrdersTable from '../components/OrdersTable';
+
 export default function Orders() {
   return (
     <div>
-      <Typography>orders here</Typography>
+      <OrdersTable />
     </div>
   );
 }

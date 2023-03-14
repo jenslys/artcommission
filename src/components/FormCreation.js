@@ -10,18 +10,23 @@ import Paper from '@mui/material/Paper';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
 import { addDoc, collection } from 'firebase/firestore';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Email, Home, LocationCity, PhotoSizeSelectLarge } from '@mui/icons-material';
 
 export default function FormCreation() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
+    address: '',
     zipCode: '',
     city: '',
     size: '100x100',
     description: '',
     status: 'new',
     stage: 'requests',
+    orderProgress: 'not started',
   });
   const dbRef = collection(db, 'requests');
 
@@ -84,6 +89,13 @@ export default function FormCreation() {
               label='First Name'
               variant='outlined'
               type='text'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.firstName}
               onChange={handleChange}
             />
@@ -93,6 +105,13 @@ export default function FormCreation() {
               label='Last Name'
               variant='outlined'
               type='text'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.lastName}
               onChange={handleChange}
             />
@@ -103,6 +122,13 @@ export default function FormCreation() {
               label='Email'
               variant='outlined'
               type='email'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <Email />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.email}
               onChange={handleChange}
             />
@@ -113,6 +139,13 @@ export default function FormCreation() {
               label='Address'
               variant='outlined'
               type='text'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <Home />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.address}
               onChange={handleChange}
             />
@@ -123,6 +156,13 @@ export default function FormCreation() {
               label='Zip Code'
               variant='outlined'
               type='text'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <Home />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.zipCode}
               onChange={handleChange}
             />
@@ -133,6 +173,13 @@ export default function FormCreation() {
               label='City'
               variant='outlined'
               type='text'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <LocationCity />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.city}
               onChange={handleChange}
             />
@@ -143,6 +190,13 @@ export default function FormCreation() {
               label='Select'
               defaultValue='100x100'
               helperText='Please select canvas size'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <PhotoSizeSelectLarge />
+                  </InputAdornment>
+                ),
+              }}
               value={formData.size}
               onChange={handleChange}
             >
