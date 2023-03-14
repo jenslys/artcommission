@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
-import { collection, getDocs, doc, updateDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, where, deleteDoc } from 'firebase/firestore';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -50,9 +50,10 @@ const ArchiveTable = () => {
     setOpen(true);
   };
 
-  // const handleDeleteClick = async (request) => {
-  //
-  // };
+  const handleDeleteClick = async (request) => {
+    await deleteDoc(doc(db, 'requests', request.id));
+    update();
+  };
 
   const handleRecoverClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
@@ -117,7 +118,9 @@ const ArchiveTable = () => {
                         <Button color='success' onClick={() => handleRecoverClick(request)}>
                           Recover
                         </Button>
-                        <Button color='error'>Delete</Button>
+                        <Button color='error' onClick={() => handleDeleteClick(request)}>
+                          Delete
+                        </Button>
                       </ButtonGroup>
                     </TableCell>
                   </TableRow>
