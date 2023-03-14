@@ -85,7 +85,7 @@ const ArchiveTable = () => {
                   <TableCell>Size</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Stage</TableCell>
-                  <TableCell>Progress</TableCell>
+                  <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
