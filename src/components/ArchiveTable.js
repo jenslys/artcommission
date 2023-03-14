@@ -50,12 +50,9 @@ const ArchiveTable = () => {
     setOpen(true);
   };
 
-  const handleDeleteClick = async (request) => {
-    await updateDoc(doc(db, 'requests', request.id), {
-      orderProgress: 'not started',
-    });
-    update();
-  };
+  // const handleDeleteClick = async (request) => {
+  //
+  // };
 
   const handleRecoverClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
@@ -86,6 +83,7 @@ const ArchiveTable = () => {
                   <TableCell>Description</TableCell>
                   <TableCell>Size</TableCell>
                   <TableCell>Email</TableCell>
+                  <TableCell>Stage</TableCell>
                   <TableCell>Progress</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -104,6 +102,13 @@ const ArchiveTable = () => {
                       <Chip
                         color='primary'
                         style={{ textTransform: 'capitalize' }}
+                        label={request.stage}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        color='primary'
+                        style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
                     </TableCell>
@@ -112,9 +117,7 @@ const ArchiveTable = () => {
                         <Button color='success' onClick={() => handleRecoverClick(request)}>
                           Recover
                         </Button>
-                        <Button color='error' onClick={() => handleDeleteClick(request)}>
-                          Delete
-                        </Button>
+                        <Button color='error'>Delete</Button>
                       </ButtonGroup>
                     </TableCell>
                   </TableRow>

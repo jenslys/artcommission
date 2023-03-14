@@ -45,7 +45,8 @@ const RequestTable = () => {
   const update = async () => {
     const q = query(
       collection(db, 'requests'),
-      where('stage', '==', 'requests', 'archived', '==', 'false'),
+      where('stage', '==', 'requests'),
+      where('archived', '==', 'false'),
     );
     const snapshot = await getDocs(q);
     const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -59,7 +60,7 @@ const RequestTable = () => {
 
   const handleAcceptClick = async () => {
     await updateDoc(doc(db, 'requests', selectedRequest.id), {
-      status: 'accepted',
+      status: 'not started',
       stage: 'orders',
     });
     setOpen(false);
