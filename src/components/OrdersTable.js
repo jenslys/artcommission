@@ -31,7 +31,9 @@ const OrdersTable = () => {
       setLoading(true); // set loading state to true
       const q = query(
         collection(db, 'requests'),
-        where('stage', '==', 'orders', 'archived', '==', 'false'),
+        where('stage', '==', 'orders'),
+        where('archived', '==', 'false'),
+        where('orderProgress', '!==', 'completed'),
       );
       const snapshot = await getDocs(q);
       const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -45,7 +47,17 @@ const OrdersTable = () => {
   const update = async () => {
     const q = query(
       collection(db, 'requests'),
-      where('stage', '==', 'orders', 'archived', '==', 'false'),
+      where(
+        'stage',
+        '==',
+        'orders',
+        'archived',
+        '==',
+        'false',
+        'orderProgress',
+        '!==',
+        'completed',
+      ),
     );
     const snapshot = await getDocs(q);
     const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -61,7 +73,7 @@ const OrdersTable = () => {
     await updateDoc(doc(db, 'requests', request.id), {
       orderProgress: 'completed',
       archived: 'true',
-      Status: 'completed',
+      status: 'completed',
     });
     update();
   };

@@ -28,7 +28,7 @@ const ArchiveTable = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true); // set loading state to true
-      const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
+      const q = query(collection(db, 'requests'), where('archived', '==', 'true'));
       const snapshot = await getDocs(q);
       const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setOrders(ordersData);
@@ -39,7 +39,7 @@ const ArchiveTable = () => {
   }, []);
 
   const update = async () => {
-    const q = query(collection(db, 'requests'), where('stage', '==', 'orders'));
+    const q = query(collection(db, 'requests'), where('archived', '==', 'true'));
     const snapshot = await getDocs(q);
     const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setOrders(ordersData);
@@ -59,7 +59,7 @@ const ArchiveTable = () => {
 
   const handleRecoverClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
-      orderProgress: 'not started',
+      archived: 'false',
     });
     update();
   };

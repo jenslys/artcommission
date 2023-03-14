@@ -30,7 +30,8 @@ const RequestTable = () => {
       setLoading(true); // set loading state to true
       const q = query(
         collection(db, 'requests'),
-        where('stage', '==', 'requests', 'archived', '==', 'false'),
+        where('stage', '==', 'requests'),
+        where('archived', '==', 'false'),
       );
       const snapshot = await getDocs(q);
       const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
