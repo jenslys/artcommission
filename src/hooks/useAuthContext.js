@@ -1,3 +1,7 @@
+/**
+ * Returns the auth context, or throws an error if it's not available
+ */
+
 import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 

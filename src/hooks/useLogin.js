@@ -1,3 +1,5 @@
+// This code is used to login a user with an email and password. It will also dispatch a LOGIN action to the authContext that will set the user in the state
+
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 
