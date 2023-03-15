@@ -55,17 +55,34 @@ export default function FormCreation() {
     event.preventDefault();
     // Handle form submission logic here
     // Need connection to db
-    addDoc(dbRef, formData)
-      .then(() => {
-        setMessage('Request sent successfully');
-        setSeverity('success');
-        handleSnackOpen();
-      })
-      .catch((error) => {
-        setMessage(error);
-        setSeverity('error');
-        handleSnackOpen();
-      });
+
+    if (
+      formData.firstName === '' ||
+      formData.lastName === '' ||
+      formData.email === '' ||
+      formData.address === '' ||
+      formData.zipCode === '' ||
+      formData.city === '' ||
+      formData.size === '' ||
+      formData.description === ''
+    ) {
+      setMessage('Please fill in all required fields');
+      setSeverity('error');
+      handleSnackOpen();
+      return;
+    } else {
+      addDoc(dbRef, formData)
+        .then(() => {
+          setMessage('Request sent successfully');
+          setSeverity('success');
+          handleSnackOpen();
+        })
+        .catch((error) => {
+          setMessage(error);
+          setSeverity('error');
+          handleSnackOpen();
+        });
+    }
   };
 
   const sizes = [
@@ -108,6 +125,7 @@ export default function FormCreation() {
               receive your request and you will get an answer within a week.
             </p>
             <TextField
+              required
               id='firstname'
               name='firstName'
               label='First Name'
@@ -122,10 +140,9 @@ export default function FormCreation() {
               }}
               value={formData.firstName}
               onChange={handleChange}
-              error={formData.firstName === ''}
-              helperText={formData.firstName === '' ? 'Empty field!' : ' '}
             />
             <TextField
+              required
               id='lastname'
               name='lastName'
               label='Last Name'
@@ -140,8 +157,6 @@ export default function FormCreation() {
               }}
               value={formData.lastName}
               onChange={handleChange}
-              error={formData.lastName === ''}
-              helperText={formData.lastName === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -159,8 +174,6 @@ export default function FormCreation() {
               }}
               value={formData.email}
               onChange={handleChange}
-              error={formData.email === ''}
-              helperText={formData.email === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -178,8 +191,6 @@ export default function FormCreation() {
               }}
               value={formData.address}
               onChange={handleChange}
-              error={formData.address === ''}
-              helperText={formData.address === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -197,8 +208,6 @@ export default function FormCreation() {
               }}
               value={formData.zipCode}
               onChange={handleChange}
-              error={formData.zipCode === ''}
-              helperText={formData.zipCode === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -216,10 +225,9 @@ export default function FormCreation() {
               }}
               value={formData.city}
               onChange={handleChange}
-              error={formData.city === ''}
-              helperText={formData.city === '' ? 'Empty field!' : ' '}
             />
             <TextField
+              required
               id='size'
               name='size'
               select
@@ -242,7 +250,9 @@ export default function FormCreation() {
                 </MenuItem>
               ))}
             </TextField>
+
             <TextField
+              required
               id='description'
               name='description'
               label='Brief description of what you want made...'
@@ -251,8 +261,6 @@ export default function FormCreation() {
               defaultValue='Description'
               value={formData.description}
               onChange={handleChange}
-              error={formData.description === ''}
-              helperText={formData.description === '' ? 'Empty field!' : ' '}
             />
             <Stack spacing={2} direction='row'>
               <Button variant='outlined' type='cancel' href='https://artbymuland.no/'>
