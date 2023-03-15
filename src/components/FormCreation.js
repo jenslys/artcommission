@@ -13,8 +13,13 @@ import { addDoc, collection } from 'firebase/firestore';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Email, Home, LocationCity, PhotoSizeSelectLarge } from '@mui/icons-material';
+import CustomSnackbar from './CustomSnackbar';
 
 export default function FormCreation() {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState('');
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -35,13 +40,32 @@ export default function FormCreation() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSnackOpen = () => {
+    setOpen(true);
+  };
+
+  const handleSnackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission logic here
     // Need connection to db
-    addDoc(dbRef, formData).catch((error) => {
-      console.log(error);
-    });
+    addDoc(dbRef, formData)
+      .then(() => {
+        setMessage('Request sent successfully');
+        setSeverity('success');
+        handleSnackOpen();
+      })
+      .catch((error) => {
+        setMessage(error);
+        setSeverity('error');
+        handleSnackOpen();
+      });
   };
 
   const sizes = [
@@ -81,7 +105,7 @@ export default function FormCreation() {
           >
             <p>
               You need to fill in this form so i can see what you want me to make.<br></br> I will
-              recive your request and you will get an answer within a week.
+              receive your request and you will get an answer within a week.
             </p>
             <TextField
               id='firstname'
@@ -98,6 +122,8 @@ export default function FormCreation() {
               }}
               value={formData.firstName}
               onChange={handleChange}
+              error={formData.firstName === ''}
+              helperText={formData.firstName === '' ? 'Empty field!' : ' '}
             />
             <TextField
               id='lastname'
@@ -114,6 +140,8 @@ export default function FormCreation() {
               }}
               value={formData.lastName}
               onChange={handleChange}
+              error={formData.lastName === ''}
+              helperText={formData.lastName === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -131,6 +159,8 @@ export default function FormCreation() {
               }}
               value={formData.email}
               onChange={handleChange}
+              error={formData.email === ''}
+              helperText={formData.email === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -148,6 +178,8 @@ export default function FormCreation() {
               }}
               value={formData.address}
               onChange={handleChange}
+              error={formData.address === ''}
+              helperText={formData.address === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -165,6 +197,8 @@ export default function FormCreation() {
               }}
               value={formData.zipCode}
               onChange={handleChange}
+              error={formData.zipCode === ''}
+              helperText={formData.zipCode === '' ? 'Empty field!' : ' '}
             />
             <TextField
               required
@@ -182,6 +216,8 @@ export default function FormCreation() {
               }}
               value={formData.city}
               onChange={handleChange}
+              error={formData.city === ''}
+              helperText={formData.city === '' ? 'Empty field!' : ' '}
             />
             <TextField
               id='size'
@@ -215,10 +251,12 @@ export default function FormCreation() {
               defaultValue='Description'
               value={formData.description}
               onChange={handleChange}
+              error={formData.description === ''}
+              helperText={formData.description === '' ? 'Empty field!' : ' '}
             />
             <Stack spacing={2} direction='row'>
               <Button variant='outlined' type='cancel' href='https://artbymuland.no/'>
-                cancel
+                Cancel
               </Button>
 
               <Button variant='contained' type='submit' onClick={handleSubmit}>
@@ -227,6 +265,12 @@ export default function FormCreation() {
             </Stack>
           </Box>
         </Paper>
+        <CustomSnackbar
+          open={open}
+          onClose={handleSnackClose}
+          severity={severity}
+          message={message}
+        />
       </Container>
     </React.Fragment>
   );
