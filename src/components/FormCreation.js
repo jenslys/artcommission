@@ -10,9 +10,6 @@ import Paper from '@mui/material/Paper';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
 import { addDoc, collection } from 'firebase/firestore';
-import InputAdornment from '@mui/material/InputAdornment';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Email, Home, LocationCity, PhotoSizeSelectLarge } from '@mui/icons-material';
 import CustomSnackbar from './CustomSnackbar';
 
 export default function FormCreation() {
@@ -131,13 +128,6 @@ export default function FormCreation() {
               label='First Name'
               variant='outlined'
               type='text'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.firstName}
               onChange={handleChange}
             />
@@ -148,13 +138,6 @@ export default function FormCreation() {
               label='Last Name'
               variant='outlined'
               type='text'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.lastName}
               onChange={handleChange}
             />
@@ -165,13 +148,6 @@ export default function FormCreation() {
               label='Email'
               variant='outlined'
               type='email'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <Email />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.email}
               onChange={handleChange}
             />
@@ -182,13 +158,6 @@ export default function FormCreation() {
               label='Address'
               variant='outlined'
               type='text'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <Home />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.address}
               onChange={handleChange}
             />
@@ -199,13 +168,6 @@ export default function FormCreation() {
               label='Zip Code'
               variant='outlined'
               type='text'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <Home />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.zipCode}
               onChange={handleChange}
             />
@@ -216,13 +178,6 @@ export default function FormCreation() {
               label='City'
               variant='outlined'
               type='text'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LocationCity />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.city}
               onChange={handleChange}
             />
@@ -233,13 +188,6 @@ export default function FormCreation() {
               select
               label='Please select canvas size'
               defaultValue='100x100'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <PhotoSizeSelectLarge />
-                  </InputAdornment>
-                ),
-              }}
               value={formData.size}
               onChange={handleChange}
             >
