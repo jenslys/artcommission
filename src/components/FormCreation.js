@@ -231,9 +231,8 @@ export default function FormCreation() {
               id='size'
               name='size'
               select
-              label='Select'
+              label='Please select canvas size'
               defaultValue='100x100'
-              helperText='Please select canvas size'
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
