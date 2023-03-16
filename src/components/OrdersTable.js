@@ -19,6 +19,7 @@ import { Grid } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
@@ -90,6 +91,11 @@ const OrdersTable = () => {
       justifyContent='center'
       padding={4}
     >
+      <Container>
+        <Typography variant='h6' align='center' gutterBottom>
+          / Orders
+        </Typography>
+      </Container>
       <>
         {loading ? (
           <CircularProgress />

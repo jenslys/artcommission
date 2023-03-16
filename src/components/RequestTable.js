@@ -18,6 +18,7 @@ import Chip from '@mui/material/Chip';
 import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
@@ -96,6 +97,11 @@ const RequestTable = () => {
       justifyContent='center'
       padding={4}
     >
+      <Container>
+        <Typography variant='h6' align='center' gutterBottom>
+          / Requests
+        </Typography>
+      </Container>
       <>
         {loading ? (
           <CircularProgress />
