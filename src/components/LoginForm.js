@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 
 import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
@@ -20,7 +19,6 @@ export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { error, login } = useLogin();
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -71,11 +69,7 @@ export default function LoginForm() {
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
-            <Button
-              onClick={() => {
-                navigate('/');
-              }}
-            >
+            <Button onClick={() => window.location.replace('https://artbymuland.no')}>
               Go back
             </Button>
             {error && (
