@@ -26,6 +26,9 @@ export default function Navbar() {
               maxWidth: { xs: 350, md: 250 },
               mr: 4,
             }}
+            onClick={() => {
+              window.location.replace('https://artbymuland.no');
+            }}
             alt='The house from the offer.'
             src={logo_white}
           />
