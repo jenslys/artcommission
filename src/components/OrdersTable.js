@@ -21,6 +21,8 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
+import sendEmail from '../utils/sendEmail';
+
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -66,6 +68,12 @@ const OrdersTable = () => {
       status: 'completed',
     });
     update();
+    sendEmail(
+      request.firstName,
+      request.email,
+      'Your order has been marked as completed',
+      'Adrian Muland',
+    );
   };
 
   const handleIPClick = async (request) => {
@@ -73,6 +81,12 @@ const OrdersTable = () => {
       status: 'in progress',
     });
     update();
+    sendEmail(
+      request.firstName,
+      request.email,
+      'Your order has been marked as in progress',
+      'Adrian Muland',
+    );
   };
 
   const handleNSClick = async (request) => {
