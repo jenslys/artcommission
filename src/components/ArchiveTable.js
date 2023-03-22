@@ -121,7 +121,11 @@ const ArchiveTable = () => {
                     </TableCell>
                     <TableCell>
                       <ButtonGroup variant='outlined' aria-label='outlined button group'>
-                        <Button color='success' onClick={() => handleRecoverClick(request)}>
+                        <Button
+                          color='success'
+                          onClick={() => handleRecoverClick(request)}
+                          disabled={request.status === 'completed'}
+                        >
                           Recover
                         </Button>
                         <Button color='error' onClick={() => handleDeleteClick(request)}>
