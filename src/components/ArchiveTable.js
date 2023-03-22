@@ -74,7 +74,7 @@ const ArchiveTable = () => {
     >
       <Container>
         <Typography variant='h6' align='center' gutterBottom>
-          / Archive
+          Archive
         </Typography>
       </Container>
       <>

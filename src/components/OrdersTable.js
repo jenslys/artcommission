@@ -93,7 +93,7 @@ const OrdersTable = () => {
     >
       <Container>
         <Typography variant='h6' align='center' gutterBottom>
-          / Orders
+          Orders
         </Typography>
       </Container>
       <>

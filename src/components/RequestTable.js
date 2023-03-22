@@ -99,7 +99,7 @@ const RequestTable = () => {
     >
       <Container>
         <Typography variant='h6' align='center' gutterBottom>
-          / Requests
+          Requests
         </Typography>
       </Container>
       <>
