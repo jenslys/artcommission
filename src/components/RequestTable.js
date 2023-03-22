@@ -20,6 +20,8 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
+import sendEmail from '../utils/sendEmail';
+
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -66,6 +68,12 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+    sendEmail(
+      selectedRequest.firstName,
+      selectedRequest.email,
+      'Your request has been accepted',
+      'Adrian Muland',
+    );
   };
 
   const handleContactClick = async () => {
@@ -86,6 +94,12 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+    sendEmail(
+      selectedRequest.firstName,
+      selectedRequest.email,
+      'Your request has been denied',
+      'Adrian Muland',
+    );
   };
 
   return (
