@@ -119,7 +119,13 @@ const OrdersTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>{request.id}</TableCell>
                     <TableCell>
-                      <Button onClick={() => handleViewClick(request)}>View</Button>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleViewClick(request)}
+                      >
+                        View
+                      </Button>
                     </TableCell>
                     <TableCell>{request.size}</TableCell>
                     <TableCell>{request.email}</TableCell>
