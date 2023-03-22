@@ -12,6 +12,8 @@ import { db } from '../firebase/config';
 import { addDoc, collection } from 'firebase/firestore';
 import CustomSnackbar from './CustomSnackbar';
 
+import sendEmail from '../utils/sendEmail';
+
 export default function FormCreation() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -50,9 +52,6 @@ export default function FormCreation() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic here
-    // Need connection to db
-
     if (
       formData.firstName === '' ||
       formData.lastName === '' ||
@@ -73,6 +72,12 @@ export default function FormCreation() {
           setMessage('Request sent successfully');
           setSeverity('success');
           handleSnackOpen();
+          sendEmail(
+            process.env.REACT_APP_ADMIN_NAME,
+            process.env.REACT_APP_ADMIN_EMAIL,
+            'New request from ' + formData.firstName + ' ' + formData.lastName,
+            window.location.hostname,
+          );
         })
         .catch((error) => {
           setMessage(error);
@@ -210,7 +215,7 @@ export default function FormCreation() {
               onChange={handleChange}
             />
             <Stack spacing={2} direction='row'>
-              <Button variant='outlined' type='cancel' href='https://artbymuland.no/'>
+              <Button variant='outlined' type='cancel' href='https://artbymuland.no'>
                 Cancel
               </Button>
 

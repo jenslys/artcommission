@@ -72,7 +72,7 @@ const OrdersTable = () => {
       request.firstName,
       request.email,
       'Your order has been marked as completed',
-      'Adrian Muland',
+      process.env.REACT_APP_ADMIN_NAME,
     );
   };
 
@@ -85,7 +85,7 @@ const OrdersTable = () => {
       request.firstName,
       request.email,
       'Your order has been marked as in progress',
-      'Adrian Muland',
+      process.env.REACT_APP_ADMIN_NAME,
     );
   };
 

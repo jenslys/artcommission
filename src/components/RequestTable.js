@@ -72,7 +72,7 @@ const RequestTable = () => {
       selectedRequest.firstName,
       selectedRequest.email,
       'Your request has been accepted',
-      'Adrian Muland',
+      process.env.REACT_APP_ADMIN_NAME,
     );
   };
 
@@ -83,7 +83,11 @@ const RequestTable = () => {
     setOpen(false);
     update();
     window.open(
-      'mailto:' + selectedRequest.email + '?subject=Response to art commission - ArtByMuland',
+      'mailto:' +
+        selectedRequest.email +
+        '?subject=Response to art commission -' +
+        ' ' +
+        process.env.REACT_APP_ADMIN_SITE_NAME,
     );
   };
 
@@ -98,7 +102,7 @@ const RequestTable = () => {
       selectedRequest.firstName,
       selectedRequest.email,
       'Your request has been denied',
-      'Adrian Muland',
+      process.env.REACT_APP_ADMIN_NAME,
     );
   };
 
