@@ -71,7 +71,7 @@ const OrdersTable = () => {
     sendEmail(
       request.firstName,
       request.email,
-      'Your order has been marked as completed',
+      'Your order has been marked as completed!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };
@@ -84,7 +84,7 @@ const OrdersTable = () => {
     sendEmail(
       request.firstName,
       request.email,
-      'Your order has been marked as in progress',
+      'Your order has been marked as in progress!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };
@@ -142,7 +142,14 @@ const OrdersTable = () => {
                       </Button>
                     </TableCell>
                     <TableCell>{request.size}</TableCell>
-                    <TableCell>{request.email}</TableCell>
+                    <TableCell
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        window.open(`mailto:${request.email}`);
+                      }}
+                    >
+                      {request.email}
+                    </TableCell>
                     <TableCell>
                       <Chip
                         color='success'

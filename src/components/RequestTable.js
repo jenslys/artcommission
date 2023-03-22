@@ -101,7 +101,7 @@ const RequestTable = () => {
     sendEmail(
       selectedRequest.firstName,
       selectedRequest.email,
-      'Your request has been denied',
+      'Your request has been denied!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };

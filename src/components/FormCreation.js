@@ -81,7 +81,7 @@ export default function FormCreation() {
           sendEmail(
             formData.firstName,
             formData.email,
-            'Your request has been received! You will hear from me soon',
+            'Your request has been received! You will hear from me soon.',
             process.env.REACT_APP_ADMIN_NAME,
           );
         })
