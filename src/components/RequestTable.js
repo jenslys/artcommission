@@ -20,6 +20,8 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
+import sendEmail from '../utils/sendEmail';
+
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -66,6 +68,12 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+    sendEmail(
+      selectedRequest.firstName,
+      selectedRequest.email,
+      'Your request has been accepted!',
+      process.env.REACT_APP_ADMIN_NAME,
+    );
   };
 
   const handleContactClick = async () => {
@@ -75,7 +83,11 @@ const RequestTable = () => {
     setOpen(false);
     update();
     window.open(
-      'mailto:' + selectedRequest.email + '?subject=Response to art commission - ArtByMuland',
+      'mailto:' +
+        selectedRequest.email +
+        '?subject=Response to art commission -' +
+        ' ' +
+        process.env.REACT_APP_ADMIN_SITE_NAME,
     );
   };
 
@@ -86,6 +98,12 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+    sendEmail(
+      selectedRequest.firstName,
+      selectedRequest.email,
+      'Your request has been denied!',
+      process.env.REACT_APP_ADMIN_NAME,
+    );
   };
 
   return (
@@ -147,7 +165,7 @@ const RequestTable = () => {
               </Typography>
             )}
           </TableContainer>
-        )}{' '}
+        )}
         {selectedRequest && (
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Request Details</DialogTitle>
@@ -162,7 +180,7 @@ const RequestTable = () => {
               <Typography>Description: {selectedRequest.description}</Typography>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' color='primary' onClick={handleContactClick}>
+              <Button variant='contained' color='info' onClick={handleContactClick}>
                 Contact
               </Button>
               <Button variant='contained' color='success' onClick={handleAcceptClick}>
