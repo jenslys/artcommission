@@ -165,7 +165,7 @@ const RequestTable = () => {
               </Typography>
             )}
           </TableContainer>
-        )}{' '}
+        )}
         {selectedRequest && (
           <Dialog open={open} onClose={() => setOpen(false)}>
             <DialogTitle>Request Details</DialogTitle>
