@@ -71,7 +71,7 @@ const RequestTable = () => {
     sendEmail(
       selectedRequest.firstName,
       selectedRequest.email,
-      'Your request has been accepted',
+      'Your request has been accepted!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };
@@ -180,7 +180,7 @@ const RequestTable = () => {
               <Typography>Description: {selectedRequest.description}</Typography>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' color='primary' onClick={handleContactClick}>
+              <Button variant='contained' color='info' onClick={handleContactClick}>
                 Contact
               </Button>
               <Button variant='contained' color='success' onClick={handleAcceptClick}>
