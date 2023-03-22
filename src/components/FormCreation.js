@@ -78,6 +78,12 @@ export default function FormCreation() {
             'New request from ' + formData.firstName + ' ' + formData.lastName,
             window.location.hostname,
           );
+          sendEmail(
+            formData.firstName,
+            formData.email,
+            'Your request has been received! You will hear from me soon',
+            process.env.REACT_APP_ADMIN_NAME,
+          );
         })
         .catch((error) => {
           setMessage(error);
