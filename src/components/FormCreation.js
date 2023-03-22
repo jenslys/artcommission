@@ -95,20 +95,20 @@ export default function FormCreation() {
 
   const sizes = [
     {
-      value: '100x100',
-      label: '100x100',
+      value: '54x65',
+      label: '54x65',
     },
     {
-      value: '150x150',
-      label: '150x150',
+      value: '73x92',
+      label: '73x92',
     },
     {
-      value: '200x200',
-      label: '200x200',
+      value: '81x100',
+      label: '81x100',
     },
     {
-      value: '200x100',
-      label: '200x100',
+      value: '89x116',
+      label: '89x116',
     },
   ];
 
