@@ -141,6 +141,11 @@ const RequestTable = () => {
                 ))}
               </TableBody>
             </Table>
+            {requests.length === 0 && (
+              <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
+                No requests
+              </Typography>
+            )}
           </TableContainer>
         )}{' '}
         {selectedRequest && (

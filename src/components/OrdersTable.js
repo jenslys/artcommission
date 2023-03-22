@@ -147,6 +147,11 @@ const OrdersTable = () => {
                 ))}
               </TableBody>
             </Table>
+            {orders.length === 0 && (
+              <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
+                No requests
+              </Typography>
+            )}
           </TableContainer>
         )}
         {selectedOrder && (
