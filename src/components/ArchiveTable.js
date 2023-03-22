@@ -145,7 +145,7 @@ const ArchiveTable = () => {
             </Table>
             {orders.length === 0 && (
               <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
-                No archived requests
+                No archived requests found
               </Typography>
             )}
           </TableContainer>

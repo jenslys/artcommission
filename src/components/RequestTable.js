@@ -143,7 +143,7 @@ const RequestTable = () => {
             </Table>
             {requests.length === 0 && (
               <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
-                No requests
+                No requests found
               </Typography>
             )}
           </TableContainer>
