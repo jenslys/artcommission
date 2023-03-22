@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
-import { AccountCircle, Archive, ExitToApp, RequestQuote, ShoppingCart } from '@mui/icons-material';
+import { Archive, ExitToApp, RequestQuote, ShoppingCart } from '@mui/icons-material';
 import logo_white from '../assets/logo_white.png';
 
 export default function Navbar() {
@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='static' elevation={0}>
         <Toolbar>
           <Box
             component='img'
@@ -25,9 +25,6 @@ export default function Navbar() {
               maxHeight: { xs: 233, md: 167 },
               maxWidth: { xs: 350, md: 250 },
               mr: 4,
-            }}
-            onClick={() => {
-              window.location.replace('https://artbymuland.no');
             }}
             alt='The house from the offer.'
             src={logo_white}
@@ -82,17 +79,6 @@ export default function Navbar() {
               flexGrow: 0,
             }}
           >
-            {!user && (
-              <Button
-                color='inherit'
-                startIcon={<AccountCircle />}
-                onClick={() => {
-                  navigate('/login');
-                }}
-              >
-                Login
-              </Button>
-            )}
             {user && (
               <Button color='inherit' startIcon={<ExitToApp />} onClick={logout}>
                 Logout
