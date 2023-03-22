@@ -74,7 +74,7 @@ const ArchiveTable = () => {
     >
       <Container>
         <Typography variant='h6' align='center' gutterBottom>
-          / Archive
+          Archive
         </Typography>
       </Container>
       <>
@@ -101,27 +101,37 @@ const ArchiveTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>{request.id}</TableCell>
                     <TableCell>
-                      <Button onClick={() => handleViewClick(request)}>View</Button>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleViewClick(request)}
+                      >
+                        View
+                      </Button>
                     </TableCell>
                     <TableCell>{request.size}</TableCell>
                     <TableCell>{request.email}</TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='info'
                         style={{ textTransform: 'capitalize' }}
                         label={request.stage}
                       />
                     </TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='success'
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
                     </TableCell>
                     <TableCell>
                       <ButtonGroup variant='outlined' aria-label='outlined button group'>
-                        <Button color='success' onClick={() => handleRecoverClick(request)}>
+                        <Button
+                          color='success'
+                          onClick={() => handleRecoverClick(request)}
+                          disabled={request.status === 'completed'}
+                        >
                           Recover
                         </Button>
                         <Button color='error' onClick={() => handleDeleteClick(request)}>
@@ -133,6 +143,11 @@ const ArchiveTable = () => {
                 ))}
               </TableBody>
             </Table>
+            {orders.length === 0 && (
+              <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
+                No archived requests found
+              </Typography>
+            )}
           </TableContainer>
         )}
         {selectedOrder && (

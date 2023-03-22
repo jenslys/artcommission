@@ -8,12 +8,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
-
-const theme = createTheme();
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -26,60 +23,56 @@ export default function LoginForm() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component='h1' variant='h5'>
-            Login
-          </Typography>
-          <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
-              autoFocus
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Sign In
-            </Button>
-            <Button onClick={() => window.location.replace('https://artbymuland.no')}>
-              Go back
-            </Button>
-            {error && (
-              <Alert severity='error' variant='filled'>
-                {error}
-              </Alert>
-            )}
-          </Box>
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'error.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Login
+        </Typography>
+        <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
+            autoFocus
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+            Sign In
+          </Button>
+          <Button onClick={() => window.location.replace('https://artbymuland.no')}>Go back</Button>
+          {error && (
+            <Alert severity='error' variant='filled'>
+              {error}
+            </Alert>
+          )}
         </Box>
-      </Container>
-    </ThemeProvider>
+      </Box>
+    </Container>
   );
 }

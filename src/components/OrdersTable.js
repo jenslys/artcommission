@@ -93,7 +93,7 @@ const OrdersTable = () => {
     >
       <Container>
         <Typography variant='h6' align='center' gutterBottom>
-          / Orders
+          Orders
         </Typography>
       </Container>
       <>
@@ -119,13 +119,19 @@ const OrdersTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>{request.id}</TableCell>
                     <TableCell>
-                      <Button onClick={() => handleViewClick(request)}>View</Button>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleViewClick(request)}
+                      >
+                        View
+                      </Button>
                     </TableCell>
                     <TableCell>{request.size}</TableCell>
                     <TableCell>{request.email}</TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='success'
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
@@ -141,6 +147,11 @@ const OrdersTable = () => {
                 ))}
               </TableBody>
             </Table>
+            {orders.length === 0 && (
+              <Typography variant='h6' align='center' sx={{ margin: 4 }} gutterBottom>
+                No requests found
+              </Typography>
+            )}
           </TableContainer>
         )}
         {selectedOrder && (

@@ -112,13 +112,13 @@ export default function FormCreation() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              '& .MuiTextField-root': { m: 1, width: '700px' },
+              '& .MuiTextField-root': { m: 1, width: '75%' },
             }}
             noValidate
             autoComplete='off'
           >
             <p>
-              You need to fill in this form so i can see what you want me to make.<br></br> I will
+              You need to fill out this form so I can see what you want me to make.<br></br> I will
               receive your request and you will get an answer within a week.
             </p>
             <TextField
