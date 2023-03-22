@@ -2,7 +2,6 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -18,24 +17,8 @@ export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static' elevation={0}>
-        <Toolbar>
-          <Box
-            component='img'
-            sx={{
-              maxHeight: { xs: 233, md: 167 },
-              maxWidth: { xs: 350, md: 250 },
-              mr: 4,
-            }}
-            alt='The house from the offer.'
-            src={logo_white}
-          />
-          <Typography
-            variant='regular'
-            component='div'
-            sx={{
-              flexGrow: 2,
-            }}
-          >
+        <Toolbar sx={{ position: 'relative' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {user && (
               <Button
                 color='inherit'
@@ -71,12 +54,32 @@ export default function Navbar() {
                 Archive
               </Button>
             )}
-          </Typography>
-          <Typography
-            variant='regular'
-            component='div'
+          </Box>
+          <Box
             sx={{
-              flexGrow: 0,
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <Box
+              component='img'
+              sx={{
+                maxHeight: { xs: 233, md: 167 },
+                maxWidth: { xs: 350, md: 250 },
+              }}
+              alt='Logo'
+              src={logo_white}
+            />
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              right: 0,
+              transform: 'translate(0, -50%)',
+              mr: 2,
             }}
           >
             {user && (
@@ -84,7 +87,7 @@ export default function Navbar() {
                 Logout
               </Button>
             )}
-          </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
