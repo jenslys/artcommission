@@ -126,7 +126,7 @@ const RequestTable = () => {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='success'
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />

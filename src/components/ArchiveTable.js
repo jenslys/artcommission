@@ -107,14 +107,14 @@ const ArchiveTable = () => {
                     <TableCell>{request.email}</TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='info'
                         style={{ textTransform: 'capitalize' }}
                         label={request.stage}
                       />
                     </TableCell>
                     <TableCell>
                       <Chip
-                        color='primary'
+                        color='success'
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
