@@ -185,12 +185,13 @@ const RequestTable = () => {
                         disableElevation
                         aria-label='outlined primary button group'
                       >
-                        <Button color='info' onClick={() => handleContactClick(request)}>
-                          Contact
-                        </Button>
                         <Button color='success' onClick={() => handleAcceptClick(request)}>
                           Accept
                         </Button>
+                        <Button color='info' onClick={() => handleContactClick(request)}>
+                          Contact
+                        </Button>
+
                         <Button color='error' onClick={() => handleDenyClick(request)}>
                           Deny
                         </Button>
