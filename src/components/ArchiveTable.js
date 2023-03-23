@@ -25,6 +25,7 @@ const ArchiveTable = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('personal');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -46,9 +47,10 @@ const ArchiveTable = () => {
     setOrders(ordersData);
   };
 
-  const handleViewClick = (request) => {
+  const handleViewClick = (request, view) => {
     setSelectedOrder(request);
     setOpen(true);
+    setView(view);
   };
 
   const handleDeleteClick = async (request) => {
@@ -86,10 +88,10 @@ const ArchiveTable = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Personal info</TableCell>
                   <TableCell>ID</TableCell>
-                  <TableCell>Description</TableCell>
                   <TableCell>Size</TableCell>
-                  <TableCell>Email</TableCell>
+                  <TableCell>Description</TableCell>
                   <TableCell>Stage</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
@@ -99,18 +101,26 @@ const ArchiveTable = () => {
                 {orders.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>{request.id}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
-                        onClick={() => handleViewClick(request)}
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
                       </Button>
                     </TableCell>
+                    <TableCell>{request.id}</TableCell>
                     <TableCell>{request.size}</TableCell>
-                    <TableCell>{request.email}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'description')}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
                     <TableCell>
                       <Chip
                         color='info'
@@ -126,7 +136,11 @@ const ArchiveTable = () => {
                       />
                     </TableCell>
                     <TableCell>
-                      <ButtonGroup variant='outlined' aria-label='outlined button group'>
+                      <ButtonGroup
+                        variant='contained'
+                        disableElevation
+                        aria-label='outlined button group'
+                      >
                         <Button
                           color='success'
                           onClick={() => handleRecoverClick(request)}
@@ -152,13 +166,33 @@ const ArchiveTable = () => {
         )}
         {selectedOrder && (
           <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Description:</DialogTitle>
-            <DialogContent>
-              <Typography>{selectedOrder.description}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpen(false)}>Close</Button>
-            </DialogActions>
+            {view === 'personal' && (
+              <>
+                <DialogTitle variant='h4'>Personal information</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>First Name: {selectedOrder.firstName}</Typography>
+                  <Typography variant='h6'>Last Name: {selectedOrder.lastName}</Typography>
+                  <Typography variant='h6'>Email: {selectedOrder.email}</Typography>
+                  <Typography variant='h6'>Address: {selectedOrder.address}</Typography>
+                  <Typography variant='h6'>Zip Code: {selectedOrder.zipCode}</Typography>
+                  <Typography variant='h6'>City: {selectedOrder.city}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
+            {view === 'description' && (
+              <>
+                <DialogTitle variant='h4'>Description</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>{selectedOrder.description}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
           </Dialog>
         )}
       </>

@@ -25,9 +25,10 @@ import sendEmail from '../utils/sendEmail';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('personal');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -57,9 +58,10 @@ const OrdersTable = () => {
     setOrders(ordersData);
   };
 
-  const handleViewClick = (request) => {
-    setSelectedOrder(request);
+  const handleViewClick = (request, view) => {
+    setSelectedRequest(request);
     setOpen(true);
+    setView(view);
   };
 
   const handleCClick = async (request) => {
@@ -119,11 +121,11 @@ const OrdersTable = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Personal info</TableCell>
                   <TableCell>ID</TableCell>
-                  <TableCell>Description</TableCell>
                   <TableCell>Size</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Progress</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -131,24 +133,25 @@ const OrdersTable = () => {
                 {orders.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>{request.id}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
-                        onClick={() => handleViewClick(request)}
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
                       </Button>
                     </TableCell>
+                    <TableCell>{request.id}</TableCell>
                     <TableCell>{request.size}</TableCell>
-                    <TableCell
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        window.open(`mailto:${request.email}`);
-                      }}
-                    >
-                      {request.email}
+                    <TableCell>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'description')}
+                      >
+                        View
+                      </Button>
                     </TableCell>
                     <TableCell>
                       <Chip
@@ -158,10 +161,20 @@ const OrdersTable = () => {
                       />
                     </TableCell>
                     <TableCell>
-                      <ButtonGroup variant='outlined' aria-label='outlined primary button group'>
-                        <Button onClick={() => handleCClick(request)}>Completed</Button>
-                        <Button onClick={() => handleIPClick(request)}>In Progress</Button>
-                        <Button onClick={() => handleNSClick(request)}>Not Started</Button>
+                      <ButtonGroup
+                        variant='contained'
+                        disableElevation
+                        aria-label='outlined primary button group'
+                      >
+                        <Button color='success' onClick={() => handleCClick(request)}>
+                          Completed
+                        </Button>
+                        <Button color='warning' onClick={() => handleIPClick(request)}>
+                          In Progress
+                        </Button>
+                        <Button color='info' onClick={() => handleNSClick(request)}>
+                          Not Started
+                        </Button>
                       </ButtonGroup>
                     </TableCell>
                   </TableRow>
@@ -175,15 +188,35 @@ const OrdersTable = () => {
             )}
           </TableContainer>
         )}
-        {selectedOrder && (
+        {selectedRequest && (
           <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Description:</DialogTitle>
-            <DialogContent>
-              <Typography>{selectedOrder.description}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpen(false)}>Close</Button>
-            </DialogActions>
+            {view === 'personal' && (
+              <>
+                <DialogTitle variant='h4'>Personal information</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
+                  <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
+                  <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
+                  <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
+                  <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
+                  <Typography variant='h6'>City: {selectedRequest.city}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
+            {view === 'description' && (
+              <>
+                <DialogTitle variant='h4'>Description</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>{selectedRequest.description}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
           </Dialog>
         )}
       </>

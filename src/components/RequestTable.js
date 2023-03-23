@@ -19,6 +19,7 @@ import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import sendEmail from '../utils/sendEmail';
 
@@ -27,6 +28,7 @@ const RequestTable = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('personal');
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -56,51 +58,52 @@ const RequestTable = () => {
     setRequests(requestsData);
   };
 
-  const handleViewClick = (request) => {
+  const handleViewClick = (request, view) => {
     setSelectedRequest(request);
     setOpen(true);
+    setView(view);
   };
 
-  const handleAcceptClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleAcceptClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'not started',
       stage: 'orders',
     });
     setOpen(false);
     update();
     sendEmail(
-      selectedRequest.firstName,
-      selectedRequest.email,
+      request.firstName,
+      request.email,
       'Your request has been accepted!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };
 
-  const handleContactClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleContactClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'contacted',
     });
     setOpen(false);
     update();
     window.open(
       'mailto:' +
-        selectedRequest.email +
+        request.email +
         '?subject=Response to art commission -' +
         ' ' +
         process.env.REACT_APP_ADMIN_SITE_NAME,
     );
   };
 
-  const handleDenyClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleDenyClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'denied',
       archived: 'true',
     });
     setOpen(false);
     update();
     sendEmail(
-      selectedRequest.firstName,
-      selectedRequest.email,
+      request.firstName,
+      request.email,
       'Your request has been denied!',
       process.env.REACT_APP_ADMIN_NAME,
     );
@@ -129,21 +132,34 @@ const RequestTable = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Personal info</TableCell>
                   <TableCell>ID</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>Size</TableCell>
+                  <TableCell>Description</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {requests.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>{request.id}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
-                        onClick={() => handleViewClick(request)}
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'personal')}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                    <TableCell>{request.id}</TableCell>
+                    <TableCell>{request.size}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleViewClick(request, 'description')}
                       >
                         View
                       </Button>
@@ -154,6 +170,24 @@ const RequestTable = () => {
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
+                    </TableCell>
+                    <TableCell>
+                      <ButtonGroup
+                        variant='contained'
+                        disableElevation
+                        aria-label='outlined primary button group'
+                      >
+                        <Button color='success' onClick={() => handleAcceptClick(request)}>
+                          Accept
+                        </Button>
+                        <Button color='info' onClick={() => handleContactClick(request)}>
+                          Contact
+                        </Button>
+
+                        <Button color='error' onClick={() => handleDenyClick(request)}>
+                          Deny
+                        </Button>
+                      </ButtonGroup>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -168,29 +202,33 @@ const RequestTable = () => {
         )}
         {selectedRequest && (
           <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Request Details</DialogTitle>
-            <DialogContent>
-              <Typography>First Name: {selectedRequest.firstName}</Typography>
-              <Typography>Last Name: {selectedRequest.lastName}</Typography>
-              <Typography>Email: {selectedRequest.email}</Typography>
-              <Typography>Address: {selectedRequest.address}</Typography>
-              <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
-              <Typography>City: {selectedRequest.city}</Typography>
-              <Typography>Size: {selectedRequest.size}</Typography>
-              <Typography>Description: {selectedRequest.description}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button variant='contained' color='info' onClick={handleContactClick}>
-                Contact
-              </Button>
-              <Button variant='contained' color='success' onClick={handleAcceptClick}>
-                Accept
-              </Button>
-              <Button variant='contained' color='error' onClick={handleDenyClick}>
-                Deny
-              </Button>
-              <Button onClick={() => setOpen(false)}>Close</Button>
-            </DialogActions>
+            {view === 'personal' && (
+              <>
+                <DialogTitle variant='h4'>Personal information</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
+                  <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
+                  <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
+                  <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
+                  <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
+                  <Typography variant='h6'>City: {selectedRequest.city}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
+            {view === 'description' && (
+              <>
+                <DialogTitle variant='h4'>Description</DialogTitle>
+                <DialogContent>
+                  <Typography variant='h6'>{selectedRequest.description}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
           </Dialog>
         )}
       </>
