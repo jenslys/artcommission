@@ -25,8 +25,10 @@ import sendEmail from '../utils/sendEmail';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [selectedRequestDesc, setSelectedRequestDesc] = useState(null);
+  const [selectedRequestPers, setSelectedRequestPers] = useState(null);
+  const [openDesc, setOpenDesc] = useState(false);
+  const [openPers, setOpenPers] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -57,9 +59,14 @@ const OrdersTable = () => {
     setOrders(ordersData);
   };
 
-  const handleViewClick = (request) => {
-    setSelectedOrder(request);
-    setOpen(true);
+  const handleViewPersonalClick = (request) => {
+    setSelectedRequestPers(request);
+    setOpenPers(true);
+  };
+
+  const handleViewDescriptionClick = (request) => {
+    setSelectedRequestDesc(request);
+    setOpenDesc(true);
   };
 
   const handleCClick = async (request) => {
@@ -119,11 +126,11 @@ const OrdersTable = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Personal info</TableCell>
                   <TableCell>ID</TableCell>
-                  <TableCell>Description</TableCell>
                   <TableCell>Size</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Progress</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -131,24 +138,25 @@ const OrdersTable = () => {
                 {orders.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>{request.id}</TableCell>
                     <TableCell>
                       <Button
                         variant='outlined'
                         color='error'
-                        onClick={() => handleViewClick(request)}
+                        onClick={() => handleViewPersonalClick(request)}
                       >
                         View
                       </Button>
                     </TableCell>
+                    <TableCell>{request.id}</TableCell>
                     <TableCell>{request.size}</TableCell>
-                    <TableCell
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        window.open(`mailto:${request.email}`);
-                      }}
-                    >
-                      {request.email}
+                    <TableCell>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleViewDescriptionClick(request)}
+                      >
+                        View
+                      </Button>
                     </TableCell>
                     <TableCell>
                       <Chip
@@ -158,10 +166,20 @@ const OrdersTable = () => {
                       />
                     </TableCell>
                     <TableCell>
-                      <ButtonGroup variant='outlined' aria-label='outlined primary button group'>
-                        <Button onClick={() => handleCClick(request)}>Completed</Button>
-                        <Button onClick={() => handleIPClick(request)}>In Progress</Button>
-                        <Button onClick={() => handleNSClick(request)}>Not Started</Button>
+                      <ButtonGroup
+                        variant='contained'
+                        disableElevation
+                        aria-label='outlined primary button group'
+                      >
+                        <Button color='success' onClick={() => handleCClick(request)}>
+                          Completed
+                        </Button>
+                        <Button color='warning' onClick={() => handleIPClick(request)}>
+                          In Progress
+                        </Button>
+                        <Button color='info' onClick={() => handleNSClick(request)}>
+                          Not Started
+                        </Button>
                       </ButtonGroup>
                     </TableCell>
                   </TableRow>
@@ -175,14 +193,30 @@ const OrdersTable = () => {
             )}
           </TableContainer>
         )}
-        {selectedOrder && (
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Description:</DialogTitle>
+        {selectedRequestPers && (
+          <Dialog open={openPers} onClose={() => setOpenPers(false)}>
+            <DialogTitle>Personal information</DialogTitle>
             <DialogContent>
-              <Typography>{selectedOrder.description}</Typography>
+              <Typography>First Name: {selectedRequestPers.firstName}</Typography>
+              <Typography>Last Name: {selectedRequestPers.lastName}</Typography>
+              <Typography>Email: {selectedRequestPers.email}</Typography>
+              <Typography>Address: {selectedRequestPers.address}</Typography>
+              <Typography>Zip Code: {selectedRequestPers.zipCode}</Typography>
+              <Typography>City: {selectedRequestPers.city}</Typography>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => setOpen(false)}>Close</Button>
+              <Button onClick={() => setOpenPers(false)}>Close</Button>
+            </DialogActions>
+          </Dialog>
+        )}
+        {selectedRequestDesc && (
+          <Dialog open={openDesc} onClose={() => setOpenDesc(false)}>
+            <DialogTitle>Description</DialogTitle>
+            <DialogContent>
+              <Typography>{selectedRequestDesc.description}</Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpenDesc(false)}>Close</Button>
             </DialogActions>
           </Dialog>
         )}

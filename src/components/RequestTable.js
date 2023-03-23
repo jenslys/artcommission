@@ -19,13 +19,16 @@ import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import sendEmail from '../utils/sendEmail';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [selectedRequestDesc, setSelectedRequestDesc] = useState(null);
+  const [selectedRequestPers, setSelectedRequestPers] = useState(null);
+  const [openDesc, setOpenDesc] = useState(false);
+  const [openPers, setOpenPers] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -56,51 +59,59 @@ const RequestTable = () => {
     setRequests(requestsData);
   };
 
-  const handleViewClick = (request) => {
-    setSelectedRequest(request);
-    setOpen(true);
+  const handleViewPersonalClick = (request) => {
+    setSelectedRequestPers(request);
+    setOpenPers(true);
   };
 
-  const handleAcceptClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleViewDescriptionClick = (request) => {
+    setSelectedRequestDesc(request);
+    setOpenDesc(true);
+  };
+
+  const handleAcceptClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'not started',
       stage: 'orders',
     });
-    setOpen(false);
+    setOpenPers(false);
+    setOpenDesc(false);
     update();
     sendEmail(
-      selectedRequest.firstName,
-      selectedRequest.email,
+      request.firstName,
+      request.email,
       'Your request has been accepted!',
       process.env.REACT_APP_ADMIN_NAME,
     );
   };
 
-  const handleContactClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleContactClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'contacted',
     });
-    setOpen(false);
+    setOpenPers(false);
+    setOpenDesc(false);
     update();
     window.open(
       'mailto:' +
-        selectedRequest.email +
+        request.email +
         '?subject=Response to art commission -' +
         ' ' +
         process.env.REACT_APP_ADMIN_SITE_NAME,
     );
   };
 
-  const handleDenyClick = async () => {
-    await updateDoc(doc(db, 'requests', selectedRequest.id), {
+  const handleDenyClick = async (request) => {
+    await updateDoc(doc(db, 'requests', request.id), {
       status: 'denied',
       archived: 'true',
     });
-    setOpen(false);
+    setOpenPers(false);
+    setOpenDesc(false);
     update();
     sendEmail(
-      selectedRequest.firstName,
-      selectedRequest.email,
+      request.firstName,
+      request.email,
       'Your request has been denied!',
       process.env.REACT_APP_ADMIN_NAME,
     );
@@ -129,21 +140,34 @@ const RequestTable = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
+                  <TableCell>Personal info</TableCell>
                   <TableCell>ID</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>Size</TableCell>
+                  <TableCell>Description</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {requests.map((request) => (
                   <TableRow key={request.id}>
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>{request.id}</TableCell>
                     <TableCell>
                       <Button
                         variant='outlined'
                         color='error'
-                        onClick={() => handleViewClick(request)}
+                        onClick={() => handleViewPersonalClick(request)}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                    <TableCell>{request.id}</TableCell>
+                    <TableCell>{request.size}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => handleViewDescriptionClick(request)}
                       >
                         View
                       </Button>
@@ -154,6 +178,23 @@ const RequestTable = () => {
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
+                    </TableCell>
+                    <TableCell>
+                      <ButtonGroup
+                        variant='contained'
+                        disableElevation
+                        aria-label='outlined primary button group'
+                      >
+                        <Button color='info' onClick={() => handleContactClick(request)}>
+                          Contact
+                        </Button>
+                        <Button color='success' onClick={() => handleAcceptClick(request)}>
+                          Accept
+                        </Button>
+                        <Button color='error' onClick={() => handleDenyClick(request)}>
+                          Deny
+                        </Button>
+                      </ButtonGroup>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -166,30 +207,30 @@ const RequestTable = () => {
             )}
           </TableContainer>
         )}
-        {selectedRequest && (
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Request Details</DialogTitle>
+        {selectedRequestPers && (
+          <Dialog open={openPers} onClose={() => setOpenPers(false)}>
+            <DialogTitle>Personal information</DialogTitle>
             <DialogContent>
-              <Typography>First Name: {selectedRequest.firstName}</Typography>
-              <Typography>Last Name: {selectedRequest.lastName}</Typography>
-              <Typography>Email: {selectedRequest.email}</Typography>
-              <Typography>Address: {selectedRequest.address}</Typography>
-              <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
-              <Typography>City: {selectedRequest.city}</Typography>
-              <Typography>Size: {selectedRequest.size}</Typography>
-              <Typography>Description: {selectedRequest.description}</Typography>
+              <Typography>First Name: {selectedRequestPers.firstName}</Typography>
+              <Typography>Last Name: {selectedRequestPers.lastName}</Typography>
+              <Typography>Email: {selectedRequestPers.email}</Typography>
+              <Typography>Address: {selectedRequestPers.address}</Typography>
+              <Typography>Zip Code: {selectedRequestPers.zipCode}</Typography>
+              <Typography>City: {selectedRequestPers.city}</Typography>
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' color='info' onClick={handleContactClick}>
-                Contact
-              </Button>
-              <Button variant='contained' color='success' onClick={handleAcceptClick}>
-                Accept
-              </Button>
-              <Button variant='contained' color='error' onClick={handleDenyClick}>
-                Deny
-              </Button>
-              <Button onClick={() => setOpen(false)}>Close</Button>
+              <Button onClick={() => setOpenPers(false)}>Close</Button>
+            </DialogActions>
+          </Dialog>
+        )}
+        {selectedRequestDesc && (
+          <Dialog open={openDesc} onClose={() => setOpenDesc(false)}>
+            <DialogTitle>Description</DialogTitle>
+            <DialogContent>
+              <Typography>{selectedRequestDesc.description}</Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpenDesc(false)}>Close</Button>
             </DialogActions>
           </Dialog>
         )}

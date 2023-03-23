@@ -26,7 +26,7 @@ export default function FormCreation() {
     address: '',
     zipCode: '',
     city: '',
-    size: '100x100',
+    size: '54x65',
     description: '',
     status: 'new',
     stage: 'requests',
