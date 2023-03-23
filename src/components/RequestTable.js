@@ -154,8 +154,8 @@ const RequestTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
+                        variant='contained'
+                        color='primary'
                         onClick={() => handleViewPersonalClick(request)}
                       >
                         View
@@ -165,8 +165,8 @@ const RequestTable = () => {
                     <TableCell>{request.size}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
+                        variant='contained'
+                        color='primary'
                         onClick={() => handleViewDescriptionClick(request)}
                       >
                         View
