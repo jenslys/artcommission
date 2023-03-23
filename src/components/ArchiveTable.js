@@ -103,8 +103,8 @@ const ArchiveTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
+                        variant='contained'
+                        color='primary'
                         onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
@@ -114,8 +114,8 @@ const ArchiveTable = () => {
                     <TableCell>{request.size}</TableCell>
                     <TableCell>
                       <Button
-                        variant='outlined'
-                        color='error'
+                        variant='contained'
+                        color='primary'
                         onClick={() => handleViewClick(request, 'description')}
                       >
                         View
@@ -168,14 +168,14 @@ const ArchiveTable = () => {
           <Dialog open={open} onClose={() => setOpen(false)}>
             {view === 'personal' && (
               <>
-                <DialogTitle>Personal information</DialogTitle>
+                <DialogTitle variant='h4'>Personal information</DialogTitle>
                 <DialogContent>
-                  <Typography>First Name: {selectedOrder.firstName}</Typography>
-                  <Typography>Last Name: {selectedOrder.lastName}</Typography>
-                  <Typography>Email: {selectedOrder.email}</Typography>
-                  <Typography>Address: {selectedOrder.address}</Typography>
-                  <Typography>Zip Code: {selectedOrder.zipCode}</Typography>
-                  <Typography>City: {selectedOrder.city}</Typography>
+                  <Typography variant='h6'>First Name: {selectedOrder.firstName}</Typography>
+                  <Typography variant='h6'>Last Name: {selectedOrder.lastName}</Typography>
+                  <Typography variant='h6'>Email: {selectedOrder.email}</Typography>
+                  <Typography variant='h6'>Address: {selectedOrder.address}</Typography>
+                  <Typography variant='h6'>Zip Code: {selectedOrder.zipCode}</Typography>
+                  <Typography variant='h6'>City: {selectedOrder.city}</Typography>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={() => setOpen(false)}>Close</Button>
@@ -184,9 +184,9 @@ const ArchiveTable = () => {
             )}
             {view === 'description' && (
               <>
-                <DialogTitle>Description</DialogTitle>
+                <DialogTitle variant='h4'>Description</DialogTitle>
                 <DialogContent>
-                  <Typography>{selectedOrder.description}</Typography>
+                  <Typography variant='h6'>{selectedOrder.description}</Typography>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={() => setOpen(false)}>Close</Button>

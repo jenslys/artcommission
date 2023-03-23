@@ -192,14 +192,14 @@ const OrdersTable = () => {
           <Dialog open={open} onClose={() => setOpen(false)}>
             {view === 'personal' && (
               <>
-                <DialogTitle>Personal information</DialogTitle>
+                <DialogTitle variant='h4'>Personal information</DialogTitle>
                 <DialogContent>
-                  <Typography>First Name: {selectedRequest.firstName}</Typography>
-                  <Typography>Last Name: {selectedRequest.lastName}</Typography>
-                  <Typography>Email: {selectedRequest.email}</Typography>
-                  <Typography>Address: {selectedRequest.address}</Typography>
-                  <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
-                  <Typography>City: {selectedRequest.city}</Typography>
+                  <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
+                  <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
+                  <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
+                  <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
+                  <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
+                  <Typography variant='h6'>City: {selectedRequest.city}</Typography>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={() => setOpen(false)}>Close</Button>
@@ -208,9 +208,9 @@ const OrdersTable = () => {
             )}
             {view === 'description' && (
               <>
-                <DialogTitle>Description</DialogTitle>
+                <DialogTitle variant='h4'>Description</DialogTitle>
                 <DialogContent>
-                  <Typography>{selectedRequest.description}</Typography>
+                  <Typography variant='h6'>{selectedRequest.description}</Typography>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={() => setOpen(false)}>Close</Button>
