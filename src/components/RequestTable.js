@@ -25,11 +25,10 @@ import sendEmail from '../utils/sendEmail';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
-  const [selectedRequestDesc, setSelectedRequestDesc] = useState(null);
-  const [selectedRequestPers, setSelectedRequestPers] = useState(null);
-  const [openDesc, setOpenDesc] = useState(false);
-  const [openPers, setOpenPers] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('personal');
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -59,14 +58,10 @@ const RequestTable = () => {
     setRequests(requestsData);
   };
 
-  const handleViewPersonalClick = (request) => {
-    setSelectedRequestPers(request);
-    setOpenPers(true);
-  };
-
-  const handleViewDescriptionClick = (request) => {
-    setSelectedRequestDesc(request);
-    setOpenDesc(true);
+  const handleViewClick = (request, view) => {
+    setSelectedRequest(request);
+    setOpen(true);
+    setView(view);
   };
 
   const handleAcceptClick = async (request) => {
@@ -74,8 +69,7 @@ const RequestTable = () => {
       status: 'not started',
       stage: 'orders',
     });
-    setOpenPers(false);
-    setOpenDesc(false);
+    setOpen(false);
     update();
     sendEmail(
       request.firstName,
@@ -89,8 +83,7 @@ const RequestTable = () => {
     await updateDoc(doc(db, 'requests', request.id), {
       status: 'contacted',
     });
-    setOpenPers(false);
-    setOpenDesc(false);
+    setOpen(false);
     update();
     window.open(
       'mailto:' +
@@ -106,8 +99,7 @@ const RequestTable = () => {
       status: 'denied',
       archived: 'true',
     });
-    setOpenPers(false);
-    setOpenDesc(false);
+    setOpen(false);
     update();
     sendEmail(
       request.firstName,
@@ -156,7 +148,7 @@ const RequestTable = () => {
                       <Button
                         variant='contained'
                         color='primary'
-                        onClick={() => handleViewPersonalClick(request)}
+                        onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
                       </Button>
@@ -167,7 +159,7 @@ const RequestTable = () => {
                       <Button
                         variant='contained'
                         color='primary'
-                        onClick={() => handleViewDescriptionClick(request)}
+                        onClick={() => handleViewClick(request, 'description')}
                       >
                         View
                       </Button>
@@ -208,31 +200,35 @@ const RequestTable = () => {
             )}
           </TableContainer>
         )}
-        {selectedRequestPers && (
-          <Dialog open={openPers} onClose={() => setOpenPers(false)}>
-            <DialogTitle>Personal information</DialogTitle>
-            <DialogContent>
-              <Typography>First Name: {selectedRequestPers.firstName}</Typography>
-              <Typography>Last Name: {selectedRequestPers.lastName}</Typography>
-              <Typography>Email: {selectedRequestPers.email}</Typography>
-              <Typography>Address: {selectedRequestPers.address}</Typography>
-              <Typography>Zip Code: {selectedRequestPers.zipCode}</Typography>
-              <Typography>City: {selectedRequestPers.city}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenPers(false)}>Close</Button>
-            </DialogActions>
-          </Dialog>
-        )}
-        {selectedRequestDesc && (
-          <Dialog open={openDesc} onClose={() => setOpenDesc(false)}>
-            <DialogTitle>Description</DialogTitle>
-            <DialogContent>
-              <Typography>{selectedRequestDesc.description}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenDesc(false)}>Close</Button>
-            </DialogActions>
+        {selectedRequest && (
+          <Dialog open={open} onClose={() => setOpen(false)}>
+            {view === 'personal' && (
+              <>
+                <DialogTitle>Personal information</DialogTitle>
+                <DialogContent>
+                  <Typography>First Name: {selectedRequest.firstName}</Typography>
+                  <Typography>Last Name: {selectedRequest.lastName}</Typography>
+                  <Typography>Email: {selectedRequest.email}</Typography>
+                  <Typography>Address: {selectedRequest.address}</Typography>
+                  <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
+                  <Typography>City: {selectedRequest.city}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
+            {view === 'description' && (
+              <>
+                <DialogTitle>Description</DialogTitle>
+                <DialogContent>
+                  <Typography>{selectedRequest.description}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
           </Dialog>
         )}
       </>

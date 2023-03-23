@@ -25,11 +25,10 @@ import sendEmail from '../utils/sendEmail';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedRequestDesc, setSelectedRequestDesc] = useState(null);
-  const [selectedRequestPers, setSelectedRequestPers] = useState(null);
-  const [openDesc, setOpenDesc] = useState(false);
-  const [openPers, setOpenPers] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState('personal');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -59,14 +58,10 @@ const OrdersTable = () => {
     setOrders(ordersData);
   };
 
-  const handleViewPersonalClick = (request) => {
-    setSelectedRequestPers(request);
-    setOpenPers(true);
-  };
-
-  const handleViewDescriptionClick = (request) => {
-    setSelectedRequestDesc(request);
-    setOpenDesc(true);
+  const handleViewClick = (request, view) => {
+    setSelectedRequest(request);
+    setOpen(true);
+    setView(view);
   };
 
   const handleCClick = async (request) => {
@@ -142,7 +137,7 @@ const OrdersTable = () => {
                       <Button
                         variant='contained'
                         color='primary'
-                        onClick={() => handleViewPersonalClick(request)}
+                        onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
                       </Button>
@@ -153,7 +148,7 @@ const OrdersTable = () => {
                       <Button
                         variant='contained'
                         color='primary'
-                        onClick={() => handleViewDescriptionClick(request)}
+                        onClick={() => handleViewClick(request, 'description')}
                       >
                         View
                       </Button>
@@ -193,31 +188,35 @@ const OrdersTable = () => {
             )}
           </TableContainer>
         )}
-        {selectedRequestPers && (
-          <Dialog open={openPers} onClose={() => setOpenPers(false)}>
-            <DialogTitle>Personal information</DialogTitle>
-            <DialogContent>
-              <Typography>First Name: {selectedRequestPers.firstName}</Typography>
-              <Typography>Last Name: {selectedRequestPers.lastName}</Typography>
-              <Typography>Email: {selectedRequestPers.email}</Typography>
-              <Typography>Address: {selectedRequestPers.address}</Typography>
-              <Typography>Zip Code: {selectedRequestPers.zipCode}</Typography>
-              <Typography>City: {selectedRequestPers.city}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenPers(false)}>Close</Button>
-            </DialogActions>
-          </Dialog>
-        )}
-        {selectedRequestDesc && (
-          <Dialog open={openDesc} onClose={() => setOpenDesc(false)}>
-            <DialogTitle>Description</DialogTitle>
-            <DialogContent>
-              <Typography>{selectedRequestDesc.description}</Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenDesc(false)}>Close</Button>
-            </DialogActions>
+        {selectedRequest && (
+          <Dialog open={open} onClose={() => setOpen(false)}>
+            {view === 'personal' && (
+              <>
+                <DialogTitle>Personal information</DialogTitle>
+                <DialogContent>
+                  <Typography>First Name: {selectedRequest.firstName}</Typography>
+                  <Typography>Last Name: {selectedRequest.lastName}</Typography>
+                  <Typography>Email: {selectedRequest.email}</Typography>
+                  <Typography>Address: {selectedRequest.address}</Typography>
+                  <Typography>Zip Code: {selectedRequest.zipCode}</Typography>
+                  <Typography>City: {selectedRequest.city}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
+            {view === 'description' && (
+              <>
+                <DialogTitle>Description</DialogTitle>
+                <DialogContent>
+                  <Typography>{selectedRequest.description}</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Close</Button>
+                </DialogActions>
+              </>
+            )}
           </Dialog>
         )}
       </>
