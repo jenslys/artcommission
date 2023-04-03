@@ -19,6 +19,7 @@ import { ButtonGroup, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import { DeleteOutline, RemoveRedEyeOutlined, Replay } from '@mui/icons-material';
 
 const ArchiveTable = () => {
   const [orders, setOrders] = useState([]);
@@ -103,8 +104,10 @@ const ArchiveTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        size='small'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
@@ -114,8 +117,10 @@ const ArchiveTable = () => {
                     <TableCell>{request.size}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        size='small'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'description')}
                       >
                         View
@@ -123,7 +128,8 @@ const ArchiveTable = () => {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        color='info'
+                        color='default'
+                        variant='outlined'
                         style={{ textTransform: 'capitalize' }}
                         label={request.stage}
                       />
@@ -143,12 +149,17 @@ const ArchiveTable = () => {
                       >
                         <Button
                           color='success'
+                          endIcon={<Replay />}
                           onClick={() => handleRecoverClick(request)}
                           disabled={request.status === 'completed'}
                         >
                           Recover
                         </Button>
-                        <Button color='error' onClick={() => handleDeleteClick(request)}>
+                        <Button
+                          color='error'
+                          endIcon={<DeleteOutline />}
+                          onClick={() => handleDeleteClick(request)}
+                        >
                           Delete
                         </Button>
                       </ButtonGroup>

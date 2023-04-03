@@ -22,6 +22,7 @@ import Container from '@mui/material/Container';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import sendEmail from '../utils/sendEmail';
+import { Check, DoDisturb, EmailOutlined, RemoveRedEyeOutlined } from '@mui/icons-material';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
@@ -146,8 +147,9 @@ const RequestTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
@@ -157,8 +159,10 @@ const RequestTable = () => {
                     <TableCell>{request.size}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        size='small'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'description')}
                       >
                         View
@@ -166,7 +170,7 @@ const RequestTable = () => {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        color='success'
+                        color='info'
                         style={{ textTransform: 'capitalize' }}
                         label={request.status}
                       />
@@ -177,14 +181,26 @@ const RequestTable = () => {
                         disableElevation
                         aria-label='outlined primary button group'
                       >
-                        <Button color='success' onClick={() => handleAcceptClick(request)}>
+                        <Button
+                          color='success'
+                          endIcon={<Check />}
+                          onClick={() => handleAcceptClick(request)}
+                        >
                           Accept
                         </Button>
-                        <Button color='info' onClick={() => handleContactClick(request)}>
+                        <Button
+                          color='info'
+                          endIcon={<EmailOutlined />}
+                          onClick={() => handleContactClick(request)}
+                        >
                           Contact
                         </Button>
 
-                        <Button color='error' onClick={() => handleDenyClick(request)}>
+                        <Button
+                          color='error'
+                          endIcon={<DoDisturb />}
+                          onClick={() => handleDenyClick(request)}
+                        >
                           Deny
                         </Button>
                       </ButtonGroup>

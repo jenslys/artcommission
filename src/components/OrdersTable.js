@@ -22,6 +22,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 
 import sendEmail from '../utils/sendEmail';
+import {
+  Check,
+  PlayArrowOutlined,
+  RemoveRedEyeOutlined,
+  StopCircleOutlined,
+} from '@mui/icons-material';
 
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
@@ -135,8 +141,10 @@ const OrdersTable = () => {
                     <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        size='small'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'personal')}
                       >
                         View
@@ -146,8 +154,10 @@ const OrdersTable = () => {
                     <TableCell>{request.size}</TableCell>
                     <TableCell>
                       <Button
-                        variant='contained'
+                        variant='outlined'
                         color='primary'
+                        size='small'
+                        endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'description')}
                       >
                         View
@@ -166,13 +176,25 @@ const OrdersTable = () => {
                         disableElevation
                         aria-label='outlined primary button group'
                       >
-                        <Button color='success' onClick={() => handleCClick(request)}>
+                        <Button
+                          color='success'
+                          endIcon={<Check />}
+                          onClick={() => handleCClick(request)}
+                        >
                           Completed
                         </Button>
-                        <Button color='warning' onClick={() => handleIPClick(request)}>
+                        <Button
+                          color='warning'
+                          endIcon={<PlayArrowOutlined />}
+                          onClick={() => handleIPClick(request)}
+                        >
                           In Progress
                         </Button>
-                        <Button color='info' onClick={() => handleNSClick(request)}>
+                        <Button
+                          color='info'
+                          endIcon={<StopCircleOutlined />}
+                          onClick={() => handleNSClick(request)}
+                        >
                           Not Started
                         </Button>
                       </ButtonGroup>
