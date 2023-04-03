@@ -149,6 +149,7 @@ const RequestTable = () => {
                       <Button
                         variant='outlined'
                         color='primary'
+                        size='small'
                         endIcon={<RemoveRedEyeOutlined />}
                         onClick={() => handleViewClick(request, 'personal')}
                       >
