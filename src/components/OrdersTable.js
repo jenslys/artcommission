@@ -20,6 +20,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import TablePagination from '@mui/material/TablePagination';
 
 import sendEmail from '../utils/sendEmail';
 import {
@@ -35,6 +36,8 @@ const OrdersTable = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -136,71 +139,86 @@ const OrdersTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders.map((request) => (
-                  <TableRow key={request.id}>
-                    <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        size='small'
-                        endIcon={<RemoveRedEyeOutlined />}
-                        onClick={() => handleViewClick(request, 'personal')}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
-                    <TableCell>{request.id}</TableCell>
-                    <TableCell>{request.size}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        size='small'
-                        endIcon={<RemoveRedEyeOutlined />}
-                        onClick={() => handleViewClick(request, 'description')}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        color='success'
-                        style={{ textTransform: 'capitalize' }}
-                        label={request.status}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <ButtonGroup
-                        variant='contained'
-                        disableElevation
-                        aria-label='outlined primary button group'
-                      >
+                {orders
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((request) => (
+                    <TableRow key={request.id}>
+                      <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
+                      <TableCell>
                         <Button
+                          variant='outlined'
+                          color='primary'
+                          size='small'
+                          endIcon={<RemoveRedEyeOutlined />}
+                          onClick={() => handleViewClick(request, 'personal')}
+                        >
+                          View
+                        </Button>
+                      </TableCell>
+                      <TableCell>{request.id}</TableCell>
+                      <TableCell>{request.size}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant='outlined'
+                          color='primary'
+                          size='small'
+                          endIcon={<RemoveRedEyeOutlined />}
+                          onClick={() => handleViewClick(request, 'description')}
+                        >
+                          View
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
                           color='success'
-                          endIcon={<Check />}
-                          onClick={() => handleCClick(request)}
+                          style={{ textTransform: 'capitalize' }}
+                          label={request.status}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <ButtonGroup
+                          variant='contained'
+                          disableElevation
+                          aria-label='outlined primary button group'
                         >
-                          Completed
-                        </Button>
-                        <Button
-                          color='warning'
-                          endIcon={<PlayArrowOutlined />}
-                          onClick={() => handleIPClick(request)}
-                        >
-                          In Progress
-                        </Button>
-                        <Button
-                          color='info'
-                          endIcon={<StopCircleOutlined />}
-                          onClick={() => handleNSClick(request)}
-                        >
-                          Not Started
-                        </Button>
-                      </ButtonGroup>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <Button
+                            color='success'
+                            endIcon={<Check />}
+                            onClick={() => handleCClick(request)}
+                          >
+                            Completed
+                          </Button>
+                          <Button
+                            color='warning'
+                            endIcon={<PlayArrowOutlined />}
+                            onClick={() => handleIPClick(request)}
+                          >
+                            In Progress
+                          </Button>
+                          <Button
+                            color='info'
+                            endIcon={<StopCircleOutlined />}
+                            onClick={() => handleNSClick(request)}
+                          >
+                            Not Started
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    count={orders.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={(e, newPage) => setPage(newPage)}
+                    onRowsPerPageChange={(e) => {
+                      setRowsPerPage(parseInt(e.target.value, 10));
+                      setPage(0);
+                    }}
+                  />
+                </TableRow>
               </TableBody>
             </Table>
             {orders.length === 0 && (
