@@ -231,7 +231,7 @@ export default function FormCreation() {
               value={formData.description}
               onChange={handleChange}
             />
-            <Stack spacing={4} direction='row'>
+            <Stack marginTop={2} spacing={4} direction='row'>
               <Button
                 variant='outlined'
                 disableElevation
