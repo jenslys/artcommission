@@ -206,19 +206,6 @@ const OrdersTable = () => {
                       </TableCell>
                     </TableRow>
                   ))}
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    count={orders.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={(e, newPage) => setPage(newPage)}
-                    onRowsPerPageChange={(e) => {
-                      setRowsPerPage(parseInt(e.target.value, 10));
-                      setPage(0);
-                    }}
-                  />
-                </TableRow>
               </TableBody>
             </Table>
             {orders.length === 0 && (
@@ -226,6 +213,17 @@ const OrdersTable = () => {
                 No requests found
               </Typography>
             )}
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              count={orders.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(e, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(e) => {
+                setRowsPerPage(parseInt(e.target.value, 10));
+                setPage(0);
+              }}
+            />
           </TableContainer>
         )}
         {selectedRequest && (

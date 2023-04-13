@@ -19,6 +19,7 @@ import { ButtonGroup, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
+import TablePagination from '@mui/material/TablePagination';
 import { DeleteOutline, RemoveRedEyeOutlined, Replay } from '@mui/icons-material';
 
 const ArchiveTable = () => {
@@ -27,6 +28,8 @@ const ArchiveTable = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -99,73 +102,75 @@ const ArchiveTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders.map((request) => (
-                  <TableRow key={request.id}>
-                    <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        size='small'
-                        endIcon={<RemoveRedEyeOutlined />}
-                        onClick={() => handleViewClick(request, 'personal')}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
-                    <TableCell>{request.id}</TableCell>
-                    <TableCell>{request.size}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        size='small'
-                        endIcon={<RemoveRedEyeOutlined />}
-                        onClick={() => handleViewClick(request, 'description')}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        color='default'
-                        variant='outlined'
-                        style={{ textTransform: 'capitalize' }}
-                        label={request.stage}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        color='success'
-                        style={{ textTransform: 'capitalize' }}
-                        label={request.status}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <ButtonGroup
-                        variant='contained'
-                        disableElevation
-                        aria-label='outlined button group'
-                      >
+                {orders
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((request) => (
+                    <TableRow key={request.id}>
+                      <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
+                      <TableCell>
                         <Button
+                          variant='outlined'
+                          color='primary'
+                          size='small'
+                          endIcon={<RemoveRedEyeOutlined />}
+                          onClick={() => handleViewClick(request, 'personal')}
+                        >
+                          View
+                        </Button>
+                      </TableCell>
+                      <TableCell>{request.id}</TableCell>
+                      <TableCell>{request.size}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant='outlined'
+                          color='primary'
+                          size='small'
+                          endIcon={<RemoveRedEyeOutlined />}
+                          onClick={() => handleViewClick(request, 'description')}
+                        >
+                          View
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          color='default'
+                          variant='outlined'
+                          style={{ textTransform: 'capitalize' }}
+                          label={request.stage}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Chip
                           color='success'
-                          endIcon={<Replay />}
-                          onClick={() => handleRecoverClick(request)}
-                          disabled={request.status === 'completed'}
+                          style={{ textTransform: 'capitalize' }}
+                          label={request.status}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <ButtonGroup
+                          variant='contained'
+                          disableElevation
+                          aria-label='outlined button group'
                         >
-                          Recover
-                        </Button>
-                        <Button
-                          color='error'
-                          endIcon={<DeleteOutline />}
-                          onClick={() => handleDeleteClick(request)}
-                        >
-                          Delete
-                        </Button>
-                      </ButtonGroup>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <Button
+                            color='success'
+                            endIcon={<Replay />}
+                            onClick={() => handleRecoverClick(request)}
+                            disabled={request.status === 'completed'}
+                          >
+                            Recover
+                          </Button>
+                          <Button
+                            color='error'
+                            endIcon={<DeleteOutline />}
+                            onClick={() => handleDeleteClick(request)}
+                          >
+                            Delete
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
             {orders.length === 0 && (
@@ -173,6 +178,17 @@ const ArchiveTable = () => {
                 No archived requests found
               </Typography>
             )}
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              count={orders.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(e, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(e) => {
+                setRowsPerPage(parseInt(e.target.value, 10));
+                setPage(0);
+              }}
+            />
           </TableContainer>
         )}
         {selectedOrder && (
