@@ -35,7 +35,7 @@ function App() {
       <div className='App'>
         {authIsReady && (
           <BrowserRouter>
-            <Navbar />
+            {user && <Navbar />}
             <Routes>
               <Route path='/' element={<Form />} />
               <Route
