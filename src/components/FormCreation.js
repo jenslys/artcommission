@@ -84,7 +84,18 @@ export default function FormCreation() {
             'Your request has been received! You will hear from me soon.',
             process.env.REACT_APP_ADMIN_NAME,
           );
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            address: '',
+            zipCode: '',
+            city: '',
+            size: '54x65',
+            description: '',
+          });
         })
+
         .catch((error) => {
           setMessage(error);
           setSeverity('error');
