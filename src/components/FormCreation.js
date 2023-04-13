@@ -231,12 +231,24 @@ export default function FormCreation() {
               value={formData.description}
               onChange={handleChange}
             />
-            <Stack spacing={2} direction='row'>
-              <Button variant='outlined' type='cancel' href='https://artbymuland.no'>
+            <Stack spacing={4} direction='row'>
+              <Button
+                variant='outlined'
+                disableElevation
+                size='large'
+                type='cancel'
+                href='https://artbymuland.no'
+              >
                 Cancel
               </Button>
 
-              <Button variant='contained' type='submit' onClick={handleSubmit}>
+              <Button
+                variant='contained'
+                disableElevation
+                size='large'
+                type='submit'
+                onClick={handleSubmit}
+              >
                 Submit
               </Button>
             </Stack>
