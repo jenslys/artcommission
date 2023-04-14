@@ -179,7 +179,7 @@ const ArchiveTable = () => {
               </Typography>
             )}
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
               count={orders.length}
               rowsPerPage={rowsPerPage}
               page={page}
