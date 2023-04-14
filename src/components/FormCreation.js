@@ -189,7 +189,7 @@ export default function FormCreation() {
               name='zipCode'
               label='Zip Code'
               variant='outlined'
-              type='text'
+              type='number'
               value={formData.zipCode}
               onChange={handleChange}
             />
