@@ -3,10 +3,6 @@ import 'firebase/firestore';
 import { db } from '../firebase/config';
 import { collection, getDocs, doc, updateDoc, query, where, deleteDoc } from 'firebase/firestore';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -21,11 +17,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import TablePagination from '@mui/material/TablePagination';
 import { DeleteOutline, RemoveRedEyeOutlined, Replay } from '@mui/icons-material';
+import { ViewModal } from './ViewModal';
 
 const ArchiveTable = () => {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [openViewModal, setOpenViewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
@@ -52,8 +49,8 @@ const ArchiveTable = () => {
   };
 
   const handleViewClick = (request, view) => {
-    setSelectedOrder(request);
-    setOpen(true);
+    setSelectedRequest(request);
+    setOpenViewModal(true);
     setView(view);
   };
 
@@ -210,36 +207,12 @@ const ArchiveTable = () => {
             />
           </TableContainer>
         )}
-        {selectedOrder && (
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            {view === 'personal' && (
-              <>
-                <DialogTitle variant='h4'>Personal information</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>First Name: {selectedOrder.firstName}</Typography>
-                  <Typography variant='h6'>Last Name: {selectedOrder.lastName}</Typography>
-                  <Typography variant='h6'>Email: {selectedOrder.email}</Typography>
-                  <Typography variant='h6'>Address: {selectedOrder.address}</Typography>
-                  <Typography variant='h6'>Zip Code: {selectedOrder.zipCode}</Typography>
-                  <Typography variant='h6'>City: {selectedOrder.city}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-            {view === 'description' && (
-              <>
-                <DialogTitle variant='h4'>Description</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>{selectedOrder.description}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-          </Dialog>
+        {openViewModal && (
+          <ViewModal
+            selectedRequest={selectedRequest}
+            view={view}
+            setOpenViewModal={setOpenViewModal}
+          />
         )}
       </>
     </Grid>
