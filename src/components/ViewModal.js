@@ -3,30 +3,30 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { Dialog } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { DialogContentText } from '@mui/material';
 
 export const ViewModal = ({ selectedRequest, view, setOpenViewModal }) => {
   return (
     <>
       <Dialog open={open} onClose={() => setOpenViewModal(false)}>
-        {view === 'personal' && <DialogTitle variant='h4'>Personal information</DialogTitle>}
-        {view === 'description' && <DialogTitle variant='h4'>Beskrivelse</DialogTitle>}
+        {view === 'personal' && <DialogTitle variant='h5'>Personal information</DialogTitle>}
+        {view === 'description' && <DialogTitle variant='h5'>Beskrivelse</DialogTitle>}
 
         <DialogContent>
           {view === 'personal' && (
             <>
-              <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
-              <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
-              <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
-              <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
-              <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
-              <Typography variant='h6'>City: {selectedRequest.city}</Typography>
+              <DialogContentText>First Name: {selectedRequest.firstName}</DialogContentText>
+              <DialogContentText>Last Name: {selectedRequest.lastName}</DialogContentText>
+              <DialogContentText>Email: {selectedRequest.email}</DialogContentText>
+              <DialogContentText>Address: {selectedRequest.address}</DialogContentText>
+              <DialogContentText>Zip Code: {selectedRequest.zipCode}</DialogContentText>
+              <DialogContentText>City: {selectedRequest.city}</DialogContentText>
             </>
           )}
           {view === 'description' && (
             <>
-              <Typography variant='h6'>{selectedRequest.description}</Typography>
+              <DialogContentText>{selectedRequest.description}</DialogContentText>
             </>
           )}
         </DialogContent>

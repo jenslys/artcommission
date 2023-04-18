@@ -5,8 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import { Typography } from '@mui/material';
-
+import { DialogContentText } from '@mui/material';
 export const ConfirmModal = ({
   selectedRequest,
   setOpenConfirmModal,
@@ -17,14 +16,12 @@ export const ConfirmModal = ({
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
-      <DialogTitle>Confirm</DialogTitle>
+      <DialogTitle variant='h5'>Confirm</DialogTitle>
       <DialogContent>
-        <Typography variant='h6'>
-          Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from:
-        </Typography>
-        <Typography variant='h6'>
-          {`${selectedRequest.firstName} ${selectedRequest.lastName}`}?
-        </Typography>
+        <DialogContentText>
+          Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from
+          {` ${selectedRequest.firstName} ${selectedRequest.lastName}`}?
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button variant='outlined' onClick={() => setOpenConfirmModal(false)} color='primary'>
