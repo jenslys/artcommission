@@ -31,7 +31,9 @@ export const ViewModal = ({ selectedRequest, view, setOpenViewModal }) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenViewModal(false)}>Close</Button>
+          <Button variant='outlined' onClick={() => setOpenViewModal(false)}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </>

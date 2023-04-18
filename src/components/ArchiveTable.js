@@ -18,11 +18,14 @@ import Container from '@mui/material/Container';
 import TablePagination from '@mui/material/TablePagination';
 import { DeleteOutline, RemoveRedEyeOutlined, Replay } from '@mui/icons-material';
 import { ViewModal } from './ViewModal';
+import { ConfirmModal } from './ConfirmModal';
 
 const ArchiveTable = () => {
   const [orders, setOrders] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openViewModal, setOpenViewModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
@@ -55,6 +58,12 @@ const ArchiveTable = () => {
   };
 
   const handleDeleteClick = async (request) => {
+    setSelectedRequest(request);
+    setOpenConfirmModal(true);
+  };
+
+  const handleConfirmDeleteClick = async (request) => {
+    setOpenConfirmModal(false);
     await deleteDoc(doc(db, 'requests', request.id));
     update();
   };
@@ -212,6 +221,14 @@ const ArchiveTable = () => {
             selectedRequest={selectedRequest}
             view={view}
             setOpenViewModal={setOpenViewModal}
+          />
+        )}
+        {openConfirmModal && (
+          <ConfirmModal
+            selectedRequest={selectedRequest}
+            setOpenConfirmModal={setOpenConfirmModal}
+            handleConfirmDenyClick={handleConfirmDeleteClick}
+            isDeletion={true}
           />
         )}
       </>

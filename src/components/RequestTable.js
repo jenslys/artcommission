@@ -269,6 +269,7 @@ const RequestTable = () => {
             selectedRequest={selectedRequest}
             setOpenConfirmModal={setOpenConfirmModal}
             handleConfirmDenyClick={handleConfirmDenyClick}
+            isDeletion={false}
           />
         )}
       </>

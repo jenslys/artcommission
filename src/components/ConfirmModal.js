@@ -7,7 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { Typography } from '@mui/material';
 
-export const ConfirmModal = ({ selectedRequest, setOpenConfirmModal, handleConfirmDenyClick }) => {
+export const ConfirmModal = ({
+  selectedRequest,
+  setOpenConfirmModal,
+  handleConfirmDenyClick,
+  isDeletion,
+}) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -15,12 +20,14 @@ export const ConfirmModal = ({ selectedRequest, setOpenConfirmModal, handleConfi
       <DialogTitle>Confirm</DialogTitle>
       <DialogContent>
         <Typography variant='h6'>
-          Are you sure you want to deny the request from{' '}
-          <strong>{`${selectedRequest.firstName} ${selectedRequest.lastName}`}</strong>?
+          Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from:
+        </Typography>
+        <Typography variant='h6'>
+          {`${selectedRequest.firstName} ${selectedRequest.lastName}`}?
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant='contained' onClick={() => setOpenConfirmModal(false)} color='secondary'>
+        <Button variant='outlined' onClick={() => setOpenConfirmModal(false)} color='primary'>
           Cancel
         </Button>
         <Button
