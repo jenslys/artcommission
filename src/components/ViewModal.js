@@ -11,7 +11,7 @@ export const ViewModal = ({ selectedRequest, view, setOpenViewModal }) => {
     <>
       <Dialog open={open} onClose={() => setOpenViewModal(false)}>
         {view === 'personal' && <DialogTitle variant='h5'>Personal information</DialogTitle>}
-        {view === 'description' && <DialogTitle variant='h5'>Beskrivelse</DialogTitle>}
+        {view === 'description' && <DialogTitle variant='h5'>Description</DialogTitle>}
 
         <DialogContent>
           {view === 'personal' && (
