@@ -1,14 +1,9 @@
-<!--- IMPORTANT: If this PR addresses multiple unrelated issues, it will be closed until separated. -->
-
 ### Description
-
-<!--- REQUIRED: Describe what changed in detail -->
 
 ### Related Issues
 
 <!--- REQUIRED: Tag all related issues (e.g. * #123) -->
 <!--- If this PR resolves the issue please specify (e.g. * closes #123) -->
-<!--- If this PR addresses multiple issues, these issues must be related to one other -->
 
 - #ISSUE_NUMBER
 
@@ -25,5 +20,3 @@
 ### Screenshots
 
 <!--- REQUIRED: if issue is UI related -->
-
-<!--- IMPORTANT: Fill out all required fields. Otherwise we might close this PR temporarily -->
