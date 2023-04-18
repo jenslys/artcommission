@@ -3,10 +3,7 @@ import 'firebase/firestore';
 import { db } from '../firebase/config';
 import { collection, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -23,12 +20,15 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import TablePagination from '@mui/material/TablePagination';
 
 import sendEmail from '../utils/sendEmail';
+import { ViewModal } from './ViewModal';
+import { ConfirmModal } from './ConfirmModal';
 import { Check, DoDisturb, EmailOutlined, RemoveRedEyeOutlined } from '@mui/icons-material';
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
@@ -64,7 +64,7 @@ const RequestTable = () => {
 
   const handleViewClick = (request, view) => {
     setSelectedRequest(request);
-    setOpen(true);
+    setOpenViewModal(true);
     setView(view);
   };
 
@@ -73,7 +73,7 @@ const RequestTable = () => {
       status: 'not started',
       stage: 'orders',
     });
-    setOpen(false);
+    setOpenViewModal(false);
     update();
     sendEmail(
       request.firstName,
@@ -87,7 +87,7 @@ const RequestTable = () => {
     await updateDoc(doc(db, 'requests', request.id), {
       status: 'contacted',
     });
-    setOpen(false);
+    setOpenViewModal(false);
     update();
     window.open(
       'mailto:' +
@@ -99,11 +99,16 @@ const RequestTable = () => {
   };
 
   const handleDenyClick = async (request) => {
+    setSelectedRequest(request);
+    setOpenConfirmModal(true);
+  };
+
+  const handleConfirmDenyClick = async (request) => {
+    setOpenConfirmModal(false);
     await updateDoc(doc(db, 'requests', request.id), {
       status: 'denied',
       archived: 'true',
     });
-    setOpen(false);
     update();
     sendEmail(
       request.firstName,
@@ -252,36 +257,19 @@ const RequestTable = () => {
             />
           </TableContainer>
         )}
-        {selectedRequest && (
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            {view === 'personal' && (
-              <>
-                <DialogTitle variant='h4'>Personal information</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
-                  <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
-                  <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
-                  <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
-                  <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
-                  <Typography variant='h6'>City: {selectedRequest.city}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-            {view === 'description' && (
-              <>
-                <DialogTitle variant='h4'>Description</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>{selectedRequest.description}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-          </Dialog>
+        {openViewModal && (
+          <ViewModal
+            selectedRequest={selectedRequest}
+            view={view}
+            setOpenViewModal={setOpenViewModal}
+          />
+        )}
+        {openConfirmModal && (
+          <ConfirmModal
+            selectedRequest={selectedRequest}
+            setOpenConfirmModal={setOpenConfirmModal}
+            handleConfirmDenyClick={handleConfirmDenyClick}
+          />
         )}
       </>
     </Grid>
