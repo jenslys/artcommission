@@ -69,6 +69,25 @@ const ArchiveTable = () => {
     update();
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'not started':
+        return 'info';
+      case 'in progress':
+        return 'warning';
+      case 'completed':
+        return 'success';
+      case 'denied':
+        return 'error';
+      case 'contacted':
+        return 'info';
+      case 'new':
+        return 'secondary';
+      default:
+        return 'info';
+    }
+  };
+
   return (
     <Grid
       container
@@ -141,7 +160,7 @@ const ArchiveTable = () => {
                       </TableCell>
                       <TableCell>
                         <Chip
-                          color='success'
+                          color={getStatusColor(request.status)}
                           style={{ textTransform: 'capitalize' }}
                           label={request.status}
                         />
