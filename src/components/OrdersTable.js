@@ -23,6 +23,8 @@ import Container from '@mui/material/Container';
 import TablePagination from '@mui/material/TablePagination';
 
 import sendEmail from '../utils/sendEmail';
+import CustomSnackbar from './CustomSnackbar';
+
 import {
   Check,
   PlayArrowOutlined,
@@ -38,6 +40,9 @@ const OrdersTable = () => {
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -79,12 +84,21 @@ const OrdersTable = () => {
       status: 'completed',
     });
     update();
-    sendEmail(
-      request.firstName,
-      request.email,
-      'Your order has been marked as completed!',
-      process.env.REACT_APP_ADMIN_NAME,
-    );
+    try {
+      sendEmail(
+        request.firstName,
+        request.email,
+        'Your order has been marked as completed!',
+        process.env.REACT_APP_ADMIN_NAME,
+        setSnackbarOpen(true),
+        setSnackbarSeverity('success'),
+        setSnackbarMessage('Email sent successfully.'),
+      );
+    } catch (error) {
+      setSnackbarOpen(true);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Failed to send email.');
+    }
   };
 
   const handleIPClick = async (request) => {
@@ -92,12 +106,21 @@ const OrdersTable = () => {
       status: 'in progress',
     });
     update();
-    sendEmail(
-      request.firstName,
-      request.email,
-      'Your order has been marked as in progress!',
-      process.env.REACT_APP_ADMIN_NAME,
-    );
+    try {
+      sendEmail(
+        request.firstName,
+        request.email,
+        'Your order has been marked as in progress!',
+        process.env.REACT_APP_ADMIN_NAME,
+        setSnackbarOpen(true),
+        setSnackbarSeverity('success'),
+        setSnackbarMessage('Email sent successfully.'),
+      );
+    } catch (error) {
+      setSnackbarOpen(true);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Failed to send email.');
+    }
   };
 
   const handleNSClick = async (request) => {
@@ -276,6 +299,12 @@ const OrdersTable = () => {
             )}
           </Dialog>
         )}
+        <CustomSnackbar
+          open={snackbarOpen}
+          severity={snackbarSeverity}
+          message={snackbarMessage}
+          onClose={() => setSnackbarOpen(false)}
+        />
       </>
     </Grid>
   );
