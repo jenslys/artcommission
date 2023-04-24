@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import Requests from './pages/Requests';
 import Orders from './pages/Orders';
 import NotFound from './pages/NotFound';
-import Navbar from './components/Navbar';
+import ResponsiveNav from './components/ResponsiveNav';
 import Archive from './pages/Archive';
 import { ThemeProvider } from '@emotion/react';
 
@@ -35,7 +35,7 @@ function App() {
       <div className='App'>
         {authIsReady && (
           <BrowserRouter>
-            {user && <Navbar />}
+            {user && <ResponsiveNav />}
             <Routes>
               <Route path='/' element={<Form />} />
               <Route
