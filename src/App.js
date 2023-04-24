@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
 import { createTheme } from '@mui/material/styles';
+import '@fontsource/montserrat';
 
 // Page components
 import Form from './pages/Form';
@@ -14,6 +15,9 @@ import Archive from './pages/Archive';
 import { ThemeProvider } from '@emotion/react';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat',
+  },
   palette: {
     mode: 'light',
     primary: {
