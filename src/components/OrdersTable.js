@@ -3,10 +3,6 @@ import 'firebase/firestore';
 import { db } from '../firebase/config';
 import { collection, getDocs, doc, updateDoc, query, where } from 'firebase/firestore';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -23,6 +19,7 @@ import Container from '@mui/material/Container';
 import TablePagination from '@mui/material/TablePagination';
 
 import sendEmail from '../utils/sendEmail';
+import { ViewModal } from './ViewModal';
 import CustomSnackbar from './CustomSnackbar';
 
 import {
@@ -35,7 +32,7 @@ import {
 const OrdersTable = () => {
   const [orders, setOrders] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openViewModal, setOpenViewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
@@ -74,7 +71,7 @@ const OrdersTable = () => {
 
   const handleViewClick = (request, view) => {
     setSelectedRequest(request);
-    setOpen(true);
+    setOpenViewModal(true);
     setView(view);
   };
 
@@ -268,36 +265,12 @@ const OrdersTable = () => {
             />
           </TableContainer>
         )}
-        {selectedRequest && (
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            {view === 'personal' && (
-              <>
-                <DialogTitle variant='h4'>Personal information</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>First Name: {selectedRequest.firstName}</Typography>
-                  <Typography variant='h6'>Last Name: {selectedRequest.lastName}</Typography>
-                  <Typography variant='h6'>Email: {selectedRequest.email}</Typography>
-                  <Typography variant='h6'>Address: {selectedRequest.address}</Typography>
-                  <Typography variant='h6'>Zip Code: {selectedRequest.zipCode}</Typography>
-                  <Typography variant='h6'>City: {selectedRequest.city}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-            {view === 'description' && (
-              <>
-                <DialogTitle variant='h4'>Description</DialogTitle>
-                <DialogContent>
-                  <Typography variant='h6'>{selectedRequest.description}</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-              </>
-            )}
-          </Dialog>
+        {openViewModal && (
+          <ViewModal
+            selectedRequest={selectedRequest}
+            view={view}
+            setOpenViewModal={setOpenViewModal}
+          />
         )}
         <CustomSnackbar
           open={snackbarOpen}
