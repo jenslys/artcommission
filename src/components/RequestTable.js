@@ -23,6 +23,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import TablePagination from '@mui/material/TablePagination';
 
 import sendEmail from '../utils/sendEmail';
+import CustomSnackbar from './CustomSnackbar';
 import { Check, DoDisturb, EmailOutlined, RemoveRedEyeOutlined } from '@mui/icons-material';
 
 const RequestTable = () => {
@@ -33,6 +34,9 @@ const RequestTable = () => {
   const [view, setView] = useState('personal');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -75,6 +79,21 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
+    try {
+      sendEmail(
+        request.firstName,
+        request.email,
+        'Your request has been accepted!',
+        process.env.REACT_APP_ADMIN_NAME,
+        setSnackbarOpen(true),
+        setSnackbarSeverity('success'),
+        setSnackbarMessage('Email sent successfully.'),
+      );
+    } catch (error) {
+      setSnackbarOpen(true);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Failed to send email.');
+    }
     sendEmail(
       request.firstName,
       request.email,
@@ -105,12 +124,21 @@ const RequestTable = () => {
     });
     setOpen(false);
     update();
-    sendEmail(
-      request.firstName,
-      request.email,
-      'Your request has been denied!',
-      process.env.REACT_APP_ADMIN_NAME,
-    );
+    try {
+      sendEmail(
+        request.firstName,
+        request.email,
+        'Your request has been denied!',
+        process.env.REACT_APP_ADMIN_NAME,
+        setSnackbarOpen(true),
+        setSnackbarSeverity('success'),
+        setSnackbarMessage('Email sent successfully.'),
+      );
+    } catch (error) {
+      setSnackbarOpen(true);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Failed to send email.');
+    }
   };
 
   const getStatusColor = (status) => {
@@ -283,6 +311,12 @@ const RequestTable = () => {
             )}
           </Dialog>
         )}
+        <CustomSnackbar
+          open={snackbarOpen}
+          severity={snackbarSeverity}
+          message={snackbarMessage}
+          onClose={() => setSnackbarOpen(false)}
+        />
       </>
     </Grid>
   );
