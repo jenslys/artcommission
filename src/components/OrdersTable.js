@@ -79,7 +79,7 @@ const OrdersTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName + ' ' + request.lastName,
+        request.firstName,
         request.email,
         'Your order has been marked as completed! I will now create an invoice for the project with delivery to the address registered to you.',
         process.env.REACT_APP_ADMIN_NAME,

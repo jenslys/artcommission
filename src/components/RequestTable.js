@@ -77,7 +77,7 @@ const RequestTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName + ' ' + request.lastName,
+        request.firstName,
         request.email,
         'Your request has been accepted! I will now start planning the project. I will contact you for further status of your project.',
         process.env.REACT_APP_ADMIN_NAME,
@@ -116,7 +116,7 @@ const RequestTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName + ' ' + request.lastName,
+        request.firstName,
         request.email,
         'Your request has been denied! I have considered your request and I cannot fulfill your request. Feel free to submit a new form and we will solve it!',
         process.env.REACT_APP_ADMIN_NAME,
