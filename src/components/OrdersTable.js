@@ -85,7 +85,7 @@ const OrdersTable = () => {
       sendEmail(
         request.firstName,
         request.email,
-        'Your order has been marked as completed!',
+        'Your order has been marked as completed! I will now create an invoice for the project with delivery to the address registered to you. ',
         process.env.REACT_APP_ADMIN_NAME,
         setSnackbarOpen(true),
         setSnackbarSeverity('success'),
@@ -107,7 +107,7 @@ const OrdersTable = () => {
       sendEmail(
         request.firstName,
         request.email,
-        'Your order has been marked as in progress!',
+        'Your order is marked as in progress! I have now started planning the project and will start the project soon.',
         process.env.REACT_APP_ADMIN_NAME,
         setSnackbarOpen(true),
         setSnackbarSeverity('success'),
