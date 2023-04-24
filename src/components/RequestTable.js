@@ -35,7 +35,9 @@ const RequestTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [snackbarSeverity, setSnackbarSeverity] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
@@ -81,25 +83,19 @@ const RequestTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName,
+        request.firstName + ' ' + request.lastName,
         request.email,
-        'Your request has been accepted!',
+        'Your request has been accepted! I will now start planning the project. I will contact you for further status of your project.',
         process.env.REACT_APP_ADMIN_NAME,
-        setSnackbarOpen(true),
-        setSnackbarSeverity('success'),
-        setSnackbarMessage('Email sent successfully.'),
       );
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('success');
+      //setSnackbarMessage('Email sent successfully.');
     } catch (error) {
-      setSnackbarOpen(true);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to send email.');
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('error');
+      //setSnackbarMessage('Failed to send email.');
     }
-    sendEmail(
-      request.firstName,
-      request.email,
-      'Your request has been accepted! I will now start planning the project. I will contact you for further status of your project.',
-      process.env.REACT_APP_ADMIN_NAME,
-    );
   };
 
   const handleContactClick = async (request) => {
@@ -131,18 +127,18 @@ const RequestTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName,
+        request.firstName + ' ' + request.lastName,
         request.email,
         'Your request has been denied! I have considered your request and I cannot fulfill your request. Feel free to submit a new form and we will solve it!',
         process.env.REACT_APP_ADMIN_NAME,
-        setSnackbarOpen(true),
-        setSnackbarSeverity('success'),
-        setSnackbarMessage('Email sent successfully.'),
       );
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('success');
+      //setSnackbarMessage('Email sent successfully.');
     } catch (error) {
-      setSnackbarOpen(true);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to send email.');
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('error');
+      //setSnackbarMessage('Failed to send email.');
     }
   };
 

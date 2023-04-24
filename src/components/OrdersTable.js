@@ -38,7 +38,9 @@ const OrdersTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [snackbarSeverity, setSnackbarSeverity] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
@@ -83,18 +85,18 @@ const OrdersTable = () => {
     update();
     try {
       sendEmail(
-        request.firstName,
+        request.firstName + ' ' + request.lastName,
         request.email,
-        'Your order has been marked as completed! I will now create an invoice for the project with delivery to the address registered to you. ',
+        'Your order has been marked as completed! I will now create an invoice for the project with delivery to the address registered to you.',
         process.env.REACT_APP_ADMIN_NAME,
-        setSnackbarOpen(true),
-        setSnackbarSeverity('success'),
-        setSnackbarMessage('Email sent successfully.'),
       );
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('success');
+      //setSnackbarMessage('Email sent successfully.');
     } catch (error) {
-      setSnackbarOpen(true);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to send email.');
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('error');
+      //setSnackbarMessage('Failed to send email.');
     }
   };
 
@@ -104,19 +106,19 @@ const OrdersTable = () => {
     });
     update();
     try {
-      sendEmail(
-        request.firstName,
+      await sendEmail(
+        request.firstName + ' ' + request.lastName,
         request.email,
         'Your order is marked as in progress! I have now started planning the project and will start the project soon.',
         process.env.REACT_APP_ADMIN_NAME,
-        setSnackbarOpen(true),
-        setSnackbarSeverity('success'),
-        setSnackbarMessage('Email sent successfully.'),
       );
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('success');
+      //setSnackbarMessage('Email sent successfully.');
     } catch (error) {
-      setSnackbarOpen(true);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to send email.');
+      //setSnackbarOpen(true);
+      //setSnackbarSeverity('error');
+      //setSnackbarMessage('Failed to send email.');
     }
   };
 

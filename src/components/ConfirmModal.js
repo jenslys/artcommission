@@ -32,7 +32,7 @@ export const ConfirmModal = ({
           onClick={() => handleConfirmDenyClick(selectedRequest)}
           color='error'
         >
-          Deny
+          {isDeletion ? 'Delete' : 'Deny'}
         </Button>
       </DialogActions>
     </Dialog>
