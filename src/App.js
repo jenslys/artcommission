@@ -32,6 +32,13 @@ const theme = createTheme({
   },
 });
 
+// eslint-disable-next-line no-unused-vars
+function ExternalRedirect() {
+  window.location.href = 'https://studio.artbymuland.no/requests';
+  console.log('redirecting....');
+  return null;
+}
+
 function App() {
   const { user, authIsReady } = useAuthContext();
   return (
@@ -42,10 +49,7 @@ function App() {
             {user && <ResponsiveNav />}
             <Routes>
               <Route path='/' element={<Form />} />
-              <Route
-                path='/login'
-                element={user ? <Navigate to='/requests' replace={true} /> : <Login />}
-              />
+              <Route path='/login' element={user ? <ExternalRedirect /> : <Login />} />
               <Route
                 path='/requests'
                 element={!user ? <Navigate to='/login' replace={true} /> : <Requests />}
