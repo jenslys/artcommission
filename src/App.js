@@ -32,10 +32,11 @@ const theme = createTheme({
   },
 });
 
-// eslint-disable-next-line no-unused-vars
 function ExternalRedirect() {
-  window.location.href = 'https://studio.artbymuland.no/requests';
-  console.log('redirecting....');
+  // Here we redirect to studio, if we are logging in from the main site
+  if (location.hostname == 'artbymuland.no') {
+    window.location.href = 'https://studio.artbymuland.no/requests';
+  }
   return null;
 }
 
