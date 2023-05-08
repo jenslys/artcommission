@@ -36,6 +36,8 @@ function ExternalRedirect() {
   // Here we redirect to studio, if we are logging in from the main site
   if (location.hostname == 'artbymuland.no') {
     window.location.href = 'https://studio.artbymuland.no/requests';
+  } else {
+    return <Navigate to='/requests' replace={true} />;
   }
   return null;
 }
