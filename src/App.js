@@ -35,10 +35,8 @@ const theme = createTheme({
 function ExternalRedirect() {
   // Here we redirect to studio, if we are logging in from the main site
   if (
-    document.referrer == 'artbymuland.no' ||
-    document.referrer == 'www.artbymuland.no' ||
-    document.referrer == 'https://artbymuland.no' ||
-    document.referrer == 'https://www.artbymuland.no'
+    window.location.href === 'https://artbymuland.no/logg-inn/' ||
+    document.referrer === 'https://artbymuland.no/logg-inn/'
   ) {
     window.location.href = 'https://studio.artbymuland.no/requests';
   } else {
