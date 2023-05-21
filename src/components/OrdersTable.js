@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
-import { collection, getDocs, doc, updateDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, where, orderBy } from 'firebase/firestore';
 import Button from '@mui/material/Button';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
@@ -42,6 +42,7 @@ const OrdersTable = () => {
       setLoading(true); // set loading state to true
       const q = query(
         collection(db, 'requests'),
+        orderBy('date', 'desc'),
         where('stage', '==', 'orders'),
         where('archived', '==', 'false'),
       );

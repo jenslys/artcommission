@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
-import { collection, getDocs, doc, updateDoc, query, where, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+  deleteDoc,
+  orderBy,
+} from 'firebase/firestore';
 import Button from '@mui/material/Button';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
@@ -34,7 +43,11 @@ const ArchiveTable = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true); // set loading state to true
-      const q = query(collection(db, 'requests'), where('archived', '==', 'true'));
+      const q = query(
+        collection(db, 'requests'),
+        where('archived', '==', 'true'),
+        orderBy('date', 'desc'),
+      );
       const snapshot = await getDocs(q);
       const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setOrders(ordersData);

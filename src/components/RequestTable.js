@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'firebase/firestore';
 import { db } from '../firebase/config';
-import { collection, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, query, where, orderBy } from 'firebase/firestore';
 import Button from '@mui/material/Button';
 
 import TableContainer from '@mui/material/TableContainer';
@@ -41,6 +41,7 @@ const RequestTable = () => {
         collection(db, 'requests'),
         where('stage', '==', 'requests'),
         where('archived', '==', 'false'),
+        orderBy('date', 'desc'),
       );
       const snapshot = await getDocs(q);
       const requestsData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));

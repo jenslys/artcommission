@@ -31,6 +31,7 @@ export default function FormCreation() {
     status: 'new',
     stage: 'requests',
     archived: 'false',
+    date: new Date().toLocaleString(),
   });
   const dbRef = collection(db, 'requests');
 
