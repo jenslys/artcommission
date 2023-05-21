@@ -4,6 +4,7 @@ import { db } from '../firebase/config';
 import { collection, getDocs, updateDoc, doc, query, where, orderBy } from 'firebase/firestore';
 import Button from '@mui/material/Button';
 
+// Importing necessary components and utilities
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -25,6 +26,7 @@ import { ConfirmModal } from './ConfirmModal';
 import { Check, DoDisturb, EmailOutlined, RemoveRedEyeOutlined } from '@mui/icons-material';
 
 const RequestTable = () => {
+  // State variables
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openViewModal, setOpenViewModal] = useState(false);
@@ -35,6 +37,7 @@ const RequestTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
+    // Fetch requests from Firestore when the component mounts
     const fetchRequests = async () => {
       setLoading(true); // set loading state to true
       const q = query(
@@ -53,6 +56,7 @@ const RequestTable = () => {
   }, []);
 
   const update = async () => {
+    // Update requests by fetching from Firestore again
     const q = query(
       collection(db, 'requests'),
       where('stage', '==', 'requests'),
@@ -64,6 +68,7 @@ const RequestTable = () => {
   };
 
   const handleViewClick = (request, view) => {
+    // Handle click on View button for a request
     setSelectedRequest(request);
     setOpenViewModal(true);
     setView(view);

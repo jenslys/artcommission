@@ -29,30 +29,30 @@ import {
 } from '@mui/icons-material';
 
 const OrdersTable = () => {
-  const [orders, setOrders] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [openViewModal, setOpenViewModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('personal');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [orders, setOrders] = useState([]); // State to hold the orders
+  const [selectedRequest, setSelectedRequest] = useState(null); // State to hold the selected request for viewing
+  const [openViewModal, setOpenViewModal] = useState(false); // State to control the visibility of the view modal
+  const [loading, setLoading] = useState(true); // State to indicate if data is currently being loaded
+  const [view, setView] = useState('personal'); // State to determine the current view mode ('personal' or 'description')
+  const [page, setPage] = useState(0); // State to hold the current page number for pagination
+  const [rowsPerPage, setRowsPerPage] = useState(10); // State to determine the number of rows per page for pagination
 
   useEffect(() => {
     const fetchOrders = async () => {
-      setLoading(true); // set loading state to true
+      setLoading(true); // Set loading state to true before fetching orders
       const q = query(
         collection(db, 'requests'),
         orderBy('date', 'desc'),
         where('stage', '==', 'orders'),
         where('archived', '==', 'false'),
       );
-      const snapshot = await getDocs(q);
-      const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setOrders(ordersData);
-      setLoading(false); // set loading state to false
+      const snapshot = await getDocs(q); // Fetch orders from Firestore
+      const ordersData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); // Map the fetched data to an array of orders
+      setOrders(ordersData); // Update the orders state with the fetched data
+      setLoading(false); // Set loading state to false after fetching orders
     };
 
-    fetchOrders();
+    fetchOrders(); // Fetch orders when the component mounts
   }, []);
 
   const update = async () => {
@@ -67,9 +67,9 @@ const OrdersTable = () => {
   };
 
   const handleViewClick = (request, view) => {
-    setSelectedRequest(request);
-    setOpenViewModal(true);
-    setView(view);
+    setSelectedRequest(request); // Set the selected request for viewing
+    setOpenViewModal(true); // Open the view modal
+    setView(view); // Set the current view mode ('personal' or 'description')
   };
 
   const handleCClick = async (request) => {
