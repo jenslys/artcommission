@@ -148,7 +148,7 @@ const OrdersTable = () => {
         </Typography>
       </Container>
       <>
-        {loading ? (
+        {loading ? ( // If loading state is true, show loading indicator
           <CircularProgress />
         ) : (
           <TableContainer component={Paper}>
@@ -165,9 +165,10 @@ const OrdersTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((request) => (
+                {orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+                  (
+                    request, // Map through the orders array and render a table row for each order
+                  ) => (
                     <TableRow key={request.id}>
                       <TableCell>{`${request.firstName} ${request.lastName}`}</TableCell>
                       <TableCell>
@@ -231,7 +232,8 @@ const OrdersTable = () => {
                         </ButtonGroup>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ),
+                )}
               </TableBody>
             </Table>
             {orders.length === 0 && (
@@ -239,15 +241,15 @@ const OrdersTable = () => {
                 No requests found
               </Typography>
             )}
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50, 100]}
-              count={orders.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(e, newPage) => setPage(newPage)}
+            <TablePagination // Pagination component
+              rowsPerPageOptions={[5, 10, 25, 50, 100]} // Options for number of rows per page
+              count={orders.length} // Total number of rows
+              rowsPerPage={rowsPerPage} // Number of rows per page
+              page={page} // Current page
+              onPageChange={(e, newPage) => setPage(newPage)} // Update the page state when the page changes
               onRowsPerPageChange={(e) => {
-                setRowsPerPage(parseInt(e.target.value, 10));
-                setPage(0);
+                setRowsPerPage(parseInt(e.target.value, 10)); // Update the rowsPerPage state when the number of rows per page changes
+                setPage(0); // Reset the page state when the number of rows per page changes
               }}
             />
           </TableContainer>

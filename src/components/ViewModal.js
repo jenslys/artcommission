@@ -12,9 +12,8 @@ export const ViewModal = ({ selectedRequest, view, setOpenViewModal }) => {
       <Dialog open={open} onClose={() => setOpenViewModal(false)}>
         {view === 'personal' && <DialogTitle variant='h5'>Personal information</DialogTitle>}
         {view === 'description' && <DialogTitle variant='h5'>Description</DialogTitle>}
-
         <DialogContent>
-          {view === 'personal' && (
+          {view === 'personal' && ( // if view is personal, show personal info
             <>
               <DialogContentText>First Name: {selectedRequest.firstName}</DialogContentText>
               <DialogContentText>Last Name: {selectedRequest.lastName}</DialogContentText>
@@ -24,7 +23,7 @@ export const ViewModal = ({ selectedRequest, view, setOpenViewModal }) => {
               <DialogContentText>City: {selectedRequest.city}</DialogContentText>
             </>
           )}
-          {view === 'description' && (
+          {view === 'description' && ( // if view is description, show description
             <>
               <DialogContentText>{selectedRequest.description}</DialogContentText>
             </>

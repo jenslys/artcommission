@@ -89,6 +89,7 @@ const ArchiveTable = () => {
   };
 
   const getStatusColor = (status) => {
+    // function to get color of status chip
     switch (status) {
       case 'not started':
         return 'info';

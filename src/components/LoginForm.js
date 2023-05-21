@@ -19,7 +19,7 @@ export default function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login(email, password);
+    login(email, password); // login is a function from useLogin hook
   };
 
   return (

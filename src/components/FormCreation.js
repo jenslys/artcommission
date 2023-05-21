@@ -68,18 +68,20 @@ export default function FormCreation() {
       handleSnackOpen();
       return;
     } else {
-      addDoc(dbRef, formData)
+      addDoc(dbRef, formData) // Add document to firestore
         .then(() => {
           setMessage('Request sent successfully');
           setSeverity('success');
           handleSnackOpen();
           sendEmail(
+            // Send email to admin
             process.env.REACT_APP_ADMIN_NAME,
             process.env.REACT_APP_ADMIN_EMAIL,
             'New request from ' + formData.firstName + ' ' + formData.lastName,
             window.location.hostname,
           );
           sendEmail(
+            // Send email to user
             formData.firstName,
             formData.email,
             'Your request has been received! I will now look through your request. You will eventually receive an email about the further process with your application..',
@@ -214,11 +216,15 @@ export default function FormCreation() {
               value={formData.size}
               onChange={handleChange}
             >
-              {sizes.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
+              {sizes.map(
+                (
+                  option, // Map through sizes array and create a MenuItem for each size
+                ) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ),
+              )}
             </TextField>
 
             <TextField

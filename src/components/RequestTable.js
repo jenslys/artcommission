@@ -41,6 +41,7 @@ const RequestTable = () => {
     const fetchRequests = async () => {
       setLoading(true); // set loading state to true
       const q = query(
+        // Create a query to fetch requests
         collection(db, 'requests'),
         where('stage', '==', 'requests'),
         where('archived', '==', 'false'),
@@ -83,6 +84,7 @@ const RequestTable = () => {
     update();
     try {
       sendEmail(
+        // Send email to the user
         request.firstName + ' ' + request.lastName,
         request.email,
         'Your request has been accepted! I will now start planning the project. I will contact you for further status of your project.',
@@ -95,11 +97,12 @@ const RequestTable = () => {
 
   const handleContactClick = async (request) => {
     await updateDoc(doc(db, 'requests', request.id), {
-      status: 'contacted',
+      status: 'contacted', // Update status to 'contacted'
     });
     setOpenViewModal(false);
     update();
     window.open(
+      // Open email client with pre-filled email
       'mailto:' +
         request.email +
         '?subject=Response to art commission -' +

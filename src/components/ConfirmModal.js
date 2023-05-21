@@ -20,7 +20,8 @@ export const ConfirmModal = ({
       <DialogContent>
         <DialogContentText>
           Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from
-          {` ${selectedRequest.firstName} ${selectedRequest.lastName}`}?
+          {` ${selectedRequest.firstName} ${selectedRequest.lastName}`}? // if isDeletion is true,
+          show delete, else show deny
         </DialogContentText>
       </DialogContent>
       <DialogActions>
