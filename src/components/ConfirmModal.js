@@ -19,7 +19,7 @@ export const ConfirmModal = ({
       <DialogTitle variant='h5'>Confirm</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from
+          Are you sure you want to {isDeletion ? 'delete' : 'deny'} the request from:{' '}
           {selectedRequest.firstName} {selectedRequest.lastName}
         </DialogContentText>
       </DialogContent>
