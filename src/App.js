@@ -15,6 +15,7 @@ import Archive from './pages/Archive';
 import { ThemeProvider } from '@emotion/react';
 
 const theme = createTheme({
+  // create a custom theme for the app
   typography: {
     fontFamily: 'Montserrat',
   },
@@ -37,26 +38,26 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className='App'>
-        {authIsReady && (
+        {authIsReady && ( // wait for firebase to initialize before rendering the app
           <BrowserRouter>
             {user && <ResponsiveNav />}
             <Routes>
               <Route path='/' element={<Form />} />
               <Route
                 path='/login'
-                element={user ? <Navigate to='/requests' replace={true} /> : <Login />}
+                element={user ? <Navigate to='/requests' replace={true} /> : <Login />} // if the user is logged in, redirect to the requests page
               />
               <Route
                 path='/requests'
-                element={!user ? <Navigate to='/login' replace={true} /> : <Requests />}
+                element={!user ? <Navigate to='/login' replace={true} /> : <Requests />} // if the user is not logged in, redirect to the login page
               />
               <Route
                 path='/archive'
-                element={!user ? <Navigate to='/login' replace={true} /> : <Archive />}
+                element={!user ? <Navigate to='/login' replace={true} /> : <Archive />} // if the user is not logged in, redirect to the login page
               />
               <Route
                 path='/orders'
-                element={!user ? <Navigate to='/login' replace={true} /> : <Orders />}
+                element={!user ? <Navigate to='/login' replace={true} /> : <Orders />} // if the user is not logged in, redirect to the login page
               />
               <Route path='*' element={<NotFound />} />
             </Routes>

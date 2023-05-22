@@ -10,6 +10,7 @@ const userId = process.env.REACT_APP_EMAILJS_USER_ID;
 //* from_name: name of the sender
 
 const sendEmail = async (to_name, to_email, message, from_name) => {
+  // This function will send an email using the emailjs service. It takes in the name and email of the recipient, the message to be sent, and the name of the sender.
   try {
     const response = await emailjs.send(
       serviceId,

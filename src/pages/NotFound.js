@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 export default function NotFound() {
+  // This component is used to display a 404 page when a user tries to access a page that does not exist
   return (
     <div>
       <Grid

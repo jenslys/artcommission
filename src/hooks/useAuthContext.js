@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 
 export const useAuthContext = () => {
+  // This custom hook is used in the Header component.
   const context = useContext(AuthContext);
 
   if (!context) {
