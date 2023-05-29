@@ -6,7 +6,7 @@
 
 #### Group project for the course **Application Development for web** (APP2000) at the University of South-Eastern Norway.
 
-- ArtByMuland is a web application managing art commissions. The application is built with ReactJS, MUI and Firebase.
+> ArtByMuland is a web application for managing art commissions. The application is built with ReactJS, MUI and Firebase.
 
 <img src="https://user-images.githubusercontent.com/69081683/235940772-b3150d0a-840e-47ae-abc5-ed4fead5dd0e.png" alt= “Screenshot” width="80%" height="80%">
 
