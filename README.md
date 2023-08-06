@@ -4,9 +4,20 @@
   <img alt="ArtByMuland Logo" src="https://user-images.githubusercontent.com/69081683/219066559-a5f2683a-497b-4236-b003-877cd047772e.png">
 </picture>
 
-#### Group project for the course **Application Development for web** (APP2000) at the University of South-Eastern Norway.
+#### Group project for the course **Application Development for web** (APP2000) at the University of South-Eastern Norway (USN)
 
-> ArtByMuland is a web application for managing art commissions. The application is built with ReactJS, MUI and Firebase.
+Features:
+
+- Authentication with Firebase
+  - Protected routes
+- CRUD operations with requests to Firebase
+  - Requests
+  - Orders
+  - Archive
+- Responsive design
+  - Customized for mobile, tablet and desktop
+- Automated email notifications with EmailJS
+- Form validation
 
 <img src="https://user-images.githubusercontent.com/69081683/235940772-b3150d0a-840e-47ae-abc5-ed4fead5dd0e.png" alt= “Screenshot” width="80%" height="80%">
 
